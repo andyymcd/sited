@@ -292,122 +292,9 @@
       <button class="category-btn" data-category="charity">Charity</button>
     </div>
 
-    <!-- Racing Section -->
-    <div class="section-header">
-      <h2>🏁 On Track</h2>
-    </div>
-
-    <div class="gallery-grid" id="racing-gallery">
-      <!-- Sample Gallery Item 1 -->
-      <div class="gallery-item" data-category="racing">
-        <img src="IMG_6212.jpeg" alt="GT3 Race Action" onerror="this.parentElement.style.display='none'">
-        <div class="gallery-caption">
-          <div class="gallery-title">GT3 Qualifying Session</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Racing</span>
-            <span>November 2024</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Placeholder for additional photos -->
-      <div class="gallery-item" data-category="racing" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">📸</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Race Action Coming Soon</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Racing</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item" data-category="racing" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">📸</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Podium Moments</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Racing</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Team Section -->
-    <div class="section-header">
-      <h2>👥 The Team</h2>
-    </div>
-
-    <div class="gallery-grid" id="team-gallery">
-      <div class="gallery-item" data-category="team" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">👨‍👩‍👦</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Team Photo - 2024</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Team</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item" data-category="team" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">🏎️</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Driver Portraits</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Team</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Events Section -->
-    <div class="section-header">
-      <h2>🎉 Events & Charity</h2>
-    </div>
-
-    <div class="gallery-grid" id="events-gallery">
-      <div class="gallery-item" data-category="charity" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">❤️</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Cedars-Sinai Partnership Launch</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Charity</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item" data-category="events" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">🎮</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Sim Racing Setup</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Events</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="gallery-item" data-category="events" style="opacity:0.5">
-        <div style="height:280px; display:flex; align-items:center; justify-content:center; background:#0e1a33">
-          <span style="font-size:48px; opacity:0.3">🏆</span>
-        </div>
-        <div class="gallery-caption">
-          <div class="gallery-title">Awards & Celebrations</div>
-          <div class="gallery-meta">
-            <span class="gallery-tag">Events</span>
-          </div>
-        </div>
-      </div>
+    <!-- Photo Gallery Grid (automatically populated from gallery-photos.js) -->
+    <div class="gallery-grid" id="gallery-container">
+      <!-- Photos will load here automatically from gallery-photos.js -->
     </div>
 
     <!-- Upload Info -->
@@ -432,12 +319,70 @@
     </div>
   </div>
 
+  <!-- Load photo gallery configuration -->
+  <script src="gallery-photos.js"></script>
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // ==========================================
+    // PHOTO GALLERY - AUTO-LOADS FROM gallery-photos.js
+    // ==========================================
+
+    // Build gallery from configuration
+    function buildGallery() {
+      const container = document.getElementById('gallery-container');
+      container.innerHTML = ''; // Clear any existing content
+
+      GALLERY_PHOTOS.forEach(photo => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        galleryItem.setAttribute('data-category', photo.category);
+
+        galleryItem.innerHTML = `
+          <img src="${photo.image}" alt="${photo.title}" onerror="this.parentElement.style.display='none'">
+          <div class="gallery-caption">
+            <div class="gallery-title">${photo.title}</div>
+            <div class="gallery-meta">
+              <span class="gallery-tag">${photo.category}</span>
+              <span>${photo.date}</span>
+            </div>
+          </div>
+        `;
+
+        // Add click handler for lightbox
+        galleryItem.addEventListener('click', () => {
+          const img = galleryItem.querySelector('img');
+          if (img && img.src && !img.src.includes('onerror')) {
+            document.getElementById('lightbox-img').src = img.src;
+            document.getElementById('lightbox').classList.add('active');
+          }
+        });
+
+        container.appendChild(galleryItem);
+      });
+
+      // Show placeholder if no photos
+      const placeholder = document.querySelector('.gallery-placeholder');
+      if (GALLERY_PHOTOS.length === 0) {
+        placeholder.style.display = 'block';
+      } else {
+        placeholder.style.display = 'none';
+      }
+    }
+
+    // Build gallery on page load
+    buildGallery();
+
     // Category filtering
     const categoryBtns = document.querySelectorAll('.category-btn');
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    let galleryItems; // Will be populated after gallery is built
+
+    function updateGalleryItems() {
+      galleryItems = document.querySelectorAll('.gallery-item');
+    }
+
+    updateGalleryItems(); // Initial update
 
     categoryBtns.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -447,6 +392,9 @@
 
         const category = btn.dataset.category;
 
+        // Update gallery items list
+        updateGalleryItems();
+
         // Filter gallery items
         galleryItems.forEach(item => {
           if (category === 'all' || item.dataset.category === category) {
@@ -455,17 +403,6 @@
             item.style.display = 'none';
           }
         });
-      });
-    });
-
-    // Lightbox functionality
-    galleryItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const img = item.querySelector('img');
-        if (img && img.src && !img.src.includes('onerror')) {
-          document.getElementById('lightbox-img').src = img.src;
-          document.getElementById('lightbox').classList.add('active');
-        }
       });
     });
 

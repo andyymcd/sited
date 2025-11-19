@@ -332,15 +332,15 @@
       <h2>Our Impact So Far</h2>
       <div class="stats-grid">
         <div class="stat-box">
-          <div class="stat-number">$2,847</div>
+          <div class="stat-number" id="stat-raised">$2,847</div>
           <div class="stat-label">Raised for Research</div>
         </div>
         <div class="stat-box">
-          <div class="stat-number">23</div>
+          <div class="stat-number" id="stat-contributors">23</div>
           <div class="stat-label">Contributors</div>
         </div>
         <div class="stat-box">
-          <div class="stat-number">8</div>
+          <div class="stat-number" id="stat-races">8</div>
           <div class="stat-label">Races Completed</div>
         </div>
         <div class="stat-box">
@@ -364,6 +364,17 @@
 
     <footer>© <span id="year"></span> Montecito Racing. All rights reserved.</footer>
   </div>
+
   <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+
+  <!-- Load shared metrics configuration -->
+  <script src="metrics-config.js"></script>
+
+  <script>
+    // Update stats from metrics-config.js
+    document.getElementById('stat-raised').textContent = '$' + METRICS.totalRaised.toLocaleString('en-US');
+    document.getElementById('stat-contributors').textContent = METRICS.contributors;
+    document.getElementById('stat-races').textContent = METRICS.racesCompleted;
+  </script>
 </body>
 </html>
