@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Our Story — Montecito Racing</title>
+  <style>
+    :root{
+      --navy:#0a1224;
+      --navy-2:#0e1a33;
+      --red:#d61e2e;
+      --text:#f2f6ff;
+      --muted:#a9b5d1;
+      --border:#1d2a4a;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial;
+      background:linear-gradient(180deg,var(--navy),#0b152e 60%,#0a142b);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:var(--text); text-decoration:none}
+    .container{max-width:1000px; margin:0 auto; padding:20px}
+
+    /* Navigation */
+    .top{display:flex; justify-content:flex-end; gap:10px; padding:10px 0; flex-wrap: wrap}
+    .btn{background:var(--red); color:#fff; padding:10px 16px; border-radius:10px; border:0; font-weight:700; cursor:pointer; display:inline-block}
+    .btn.alt{background:transparent; border:1px solid var(--border); color:var(--text)}
+    .btn:hover{opacity:0.9; transition:opacity 0.2s}
+
+    /* Logo */
+    .logo-wrap{
+      display:flex; align-items:center; justify-content:center;
+      padding:28px; border:1px solid var(--border); border-radius:16px;
+      background:linear-gradient(180deg,var(--navy-2),#0b162f);
+      min-height:180px; margin-bottom:24px;
+    }
+    .logo-wrap img{max-height:clamp(120px, 18vw, 220px); width:auto; object-fit:contain}
+
+    /* Typography */
+    h1{
+      font-size:clamp(32px,5vw,52px);
+      margin:0 0 16px;
+      background:linear-gradient(135deg, #ffffff 0%, #a9b5d1 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      line-height:1.2;
+    }
+    h2{
+      font-size:clamp(24px,4vw,36px);
+      margin:32px 0 16px;
+      border-left:6px solid var(--red);
+      padding-left:16px;
+      line-height:1.3;
+    }
+    h3{
+      font-size:clamp(18px,3vw,24px);
+      margin:24px 0 12px;
+      color:#d7def1;
+    }
+
+    /* Cards */
+    .card{
+      background:linear-gradient(180deg,var(--navy-2),#0b162f);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:32px;
+      margin:24px 0;
+    }
+
+    .hero-card{
+      background:linear-gradient(135deg, rgba(214, 30, 46, 0.1) 0%, rgba(14, 26, 51, 1) 50%);
+      border:1px solid var(--red);
+      border-radius:16px;
+      padding:48px 32px;
+      margin:24px 0;
+      text-align:center;
+      box-shadow:
+        inset 0 0 30px rgba(214, 30, 46, 0.1),
+        0 0 40px rgba(214, 30, 46, 0.15);
+    }
+
+    /* Timeline */
+    .timeline{
+      position:relative;
+      padding:20px 0;
+    }
+
+    .timeline-item{
+      position:relative;
+      padding:0 0 40px 40px;
+      border-left:2px solid var(--border);
+      margin-left:20px;
+    }
+
+    .timeline-item:last-child{
+      border-left:2px solid transparent;
+      padding-bottom:0;
+    }
+
+    .timeline-dot{
+      position:absolute;
+      left:-9px;
+      top:0;
+      width:16px;
+      height:16px;
+      border-radius:50%;
+      background:var(--red);
+      box-shadow:0 0 0 4px var(--navy-2), 0 0 12px rgba(214, 30, 46, 0.6);
+    }
+
+    .timeline-date{
+      font-size:14px;
+      color:var(--red);
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      margin-bottom:8px;
+    }
+
+    .timeline-content h3{
+      margin-top:0;
+    }
+
+    /* Quote Box */
+    .quote{
+      background:rgba(214, 30, 46, 0.05);
+      border-left:4px solid var(--red);
+      padding:24px 28px;
+      margin:24px 0;
+      font-style:italic;
+      color:#d7def1;
+      border-radius:0 12px 12px 0;
+    }
+
+    .quote-author{
+      font-style:normal;
+      font-weight:700;
+      color:var(--red);
+      margin-top:12px;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:0.5px;
+    }
+
+    /* Stats Grid */
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:20px;
+      margin:32px 0;
+    }
+
+    .stat-box{
+      background:linear-gradient(135deg, rgba(214, 30, 46, 0.08) 0%, rgba(14, 26, 51, 0.8) 100%);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:24px;
+      text-align:center;
+    }
+
+    .stat-number{
+      font-size:clamp(32px, 5vw, 48px);
+      font-weight:700;
+      color:var(--red);
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .stat-label{
+      font-size:14px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1px;
+    }
+
+    /* Two Column Layout */
+    .two-col{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+      margin:24px 0;
+    }
+
+    @media (max-width:768px){
+      .two-col{
+        grid-template-columns:1fr;
+      }
+      .timeline-item{
+        padding-left:30px;
+        margin-left:10px;
+      }
+      .hero-card{
+        padding:32px 24px;
+      }
+    }
+
+    /* Image with caption */
+    .image-caption{
+      margin:24px 0;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid var(--border);
+    }
+
+    .image-caption img{
+      width:100%;
+      height:auto;
+      display:block;
+    }
+
+    .caption{
+      padding:16px;
+      background:var(--navy-2);
+      font-size:14px;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    footer{margin:48px 0 28px; text-align:center; color:var(--muted); font-size:14px}
+
+    /* Smooth scroll */
+    html{scroll-behavior:smooth}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <div class="top">
+      <a class="btn alt" href="index.html">Home</a>
+      <a class="btn alt" href="photo-gallery.html">Gallery</a>
+      <a class="btn alt" href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
+      <a class="btn alt" href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
+      <a class="btn" href="index.html#charity">Donate</a>
+    </div>
+
+    <!-- Logo -->
+    <section class="logo-wrap" aria-label="Team Logo">
+      <img src="logo2.png" alt="Montecito Racing Logo" onerror="this.style.display='none'">
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero-card">
+      <h1>Our Story</h1>
+      <p style="font-size:clamp(16px,2.5vw,20px); color:#d7def1; max-width:700px; margin:0 auto">From virtual racing to a mission-driven motorsport team supporting cancer research</p>
+    </section>
+
+    <!-- The Beginning -->
+    <section class="card">
+      <h2>The Beginning</h2>
+      <p style="font-size:18px; color:#d7def1">Montecito Racing was founded in the USA with a clear vision: to build a competitive motorsport team that stands for more than just podium finishes. We exist at the intersection of racing excellence and meaningful impact.</p>
+
+      <div class="quote">
+        "I grew up in Seattle and spent time in the care of Seattle Children's Hospital. That experience showed me how much a great hospital can shape your health and mindset. When I stumbled upon Cedars-Sinai and their work in cancer research, I saw that same standard of care and impact."
+        <div class="quote-author">— Andrew McDonald, Founder & Driver #88</div>
+      </div>
+
+      <p>What started as a passion for sim racing evolved into something far more significant. We realized we had a platform — a voice, an audience, and the ability to direct attention toward causes that matter.</p>
+    </section>
+
+    <!-- Timeline -->
+    <section class="card">
+      <h2>Our Journey</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">The Foundation</div>
+            <h3>Building the Team</h3>
+            <p>Montecito Racing was established with a focus on GT endurance racing. We started recruiting drivers who shared our values: teamwork, respect, and the drive to compete at the highest level.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">The Mission</div>
+            <h3>Partnering with Cedars-Sinai</h3>
+            <p>We formalized our partnership with Cedars-Sinai Medical Center, directing 100% of donations to their cancer research programs. Racing became our vehicle for impact.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Present Day</div>
+            <h3>Competing & Contributing</h3>
+            <p>We're actively competing in GT3 simulator racing while building toward real-world GT4 endurance events. Every race, every stream, every post serves the mission.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">The Future</div>
+            <h3>Full Endurance Program</h3>
+            <p>Our long-term goal is to field a competitive GT4 endurance team on real tracks, with Cedars-Sinai branding on every car. We want donors, fans, and patients to feel connected to what happens on track.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Values -->
+    <section class="card">
+      <h2>What We Stand For</h2>
+      <div class="two-col">
+        <div>
+          <h3>🏁 Racing Excellence</h3>
+          <p>We don't compromise on performance. Our drivers train rigorously, our strategies are data-driven, and our goal is podium finishes. We race to win.</p>
+        </div>
+        <div>
+          <h3>❤️ Meaningful Impact</h3>
+          <p>Every dollar raised goes directly to Cedars-Sinai cancer research. We're transparent, accountable, and committed to making a real difference.</p>
+        </div>
+        <div>
+          <h3>🤝 Community First</h3>
+          <p>From our Discord to our race day streams, we're building a community that cares. Drivers, fans, and supporters are all part of the team.</p>
+        </div>
+        <div>
+          <h3>📈 Continuous Growth</h3>
+          <p>We're constantly improving — as drivers, as a team, and as a platform for change. Sim racing today, real tracks tomorrow.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Current Impact Stats -->
+    <section class="card">
+      <h2>Our Impact So Far</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-number">$2,847</div>
+          <div class="stat-label">Raised for Research</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">23</div>
+          <div class="stat-label">Contributors</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">8</div>
+          <div class="stat-label">Races Completed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Donations to Research</div>
+        </div>
+      </div>
+      <p style="text-align:center; margin-top:24px; color:var(--muted)">All donations made through our platform go directly to Cedars-Sinai Medical Center for cancer research. No administrative fees. No middlemen. Just impact.</p>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="hero-card">
+      <h2 style="margin-top:0">Join Our Mission</h2>
+      <p style="font-size:18px; margin-bottom:24px">Whether you're a racing fan, a supporter of medical research, or someone who believes in using platforms for good — there's a place for you here.</p>
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap">
+        <a class="btn" href="index.html#charity">Support Our Cause</a>
+        <a class="btn alt" href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Join Discord</a>
+        <a class="btn alt" href="photo-gallery.html">View Gallery</a>
+      </div>
+    </section>
+
+    <footer>© <span id="year"></span> Montecito Racing. All rights reserved.</footer>
+  </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+</body>
+</html>
