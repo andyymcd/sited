@@ -57,6 +57,289 @@
       .banner img{height:180px}
       .logo-wrap img{max-height:180px; max-width:90vw}
     }
+
+    /* ===== GT3 IMPACT BAR STYLES ===== */
+    .impact-bar {
+      margin: 24px 0;
+      padding: 28px 32px;
+      max-width: 1000px;
+      height: 140px;
+      background: linear-gradient(180deg, rgba(14, 26, 51, 1) 0%, rgba(10, 18, 36, 1) 100%);
+      border: 1.5px solid var(--red);
+      border-radius: 16px;
+      position: relative;
+      /* Triple shadow for GT3 glow effect */
+      box-shadow:
+        inset 0 0 20px rgba(214, 30, 46, 0.15),  /* inner red glow */
+        0 0 30px rgba(214, 30, 46, 0.25),         /* outer red halo */
+        0 8px 24px rgba(0, 0, 0, 0.4);            /* depth shadow */
+
+      /* Fade in from below on load */
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s ease-out 0.3s forwards;
+    }
+
+    /* Subtle pulse animation - heartbeat effect */
+    @keyframes subtlePulse {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow:
+          inset 0 0 20px rgba(214, 30, 46, 0.15),
+          0 0 30px rgba(214, 30, 46, 0.25),
+          0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+      30% {
+        transform: scale(1.005);
+        box-shadow:
+          inset 0 0 20px rgba(214, 30, 46, 0.2),
+          0 0 30px rgba(214, 30, 46, 0.35),
+          0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    .impact-bar {
+      animation: fadeInUp 0.6s ease-out 0.3s forwards, subtlePulse 4s ease-in-out 2s infinite;
+    }
+
+    /* Fade in animation */
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Hover state - intensify glow */
+    .impact-bar:hover {
+      box-shadow:
+        inset 0 0 20px rgba(214, 30, 46, 0.2),
+        0 0 30px rgba(214, 30, 46, 0.45),
+        0 8px 24px rgba(0, 0, 0, 0.4);
+      border-color: #e63946;
+      transition: all 0.3s ease;
+    }
+
+    /* Metrics Container - Three Columns */
+    .metrics-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+
+    /* Individual Metric Column */
+    .metric-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Metric Icon */
+    .metric-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--muted);
+      stroke-width: 2;
+    }
+
+    /* Metric Number - The Star */
+    .metric-number {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      line-height: 1;
+    }
+
+    /* Metric Label */
+    .metric-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Dividers between columns */
+    .metric-divider {
+      width: 1px;
+      height: 80px;
+      background: rgba(169, 181, 209, 0.2);
+      margin: 0 20px;
+    }
+
+    /* Progress Section */
+    .progress-section {
+      position: relative;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 11px;
+    }
+
+    .progress-percentage {
+      color: #ffffff;
+      font-weight: 600;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .progress-goal {
+      color: var(--muted);
+    }
+
+    /* Progress Track */
+    .progress-track {
+      height: 8px;
+      width: 100%;
+      background: rgba(169, 181, 209, 0.15);
+      border: 1px solid rgba(169, 181, 209, 0.2);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Progress Fill */
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d61e2e 0%, #e63946 50%, #ff4757 100%);
+      border-radius: 4px;
+      transition: width 0.8s ease-out;
+      box-shadow: 0 0 8px rgba(214, 30, 46, 0.6);
+      animation: progressPulse 2s ease-in-out infinite;
+    }
+
+    /* Progress bar pulse */
+    @keyframes progressPulse {
+      0%, 100% { opacity: 0.9; }
+      50% { opacity: 1; box-shadow: 0 0 12px rgba(214, 30, 46, 0.8); }
+    }
+
+    /* Number update celebration animation */
+    @keyframes numberCelebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); color: #ff4757; }
+      100% { transform: scale(1); }
+    }
+
+    /* Tablet Responsive (600px - 900px) */
+    @media (max-width: 900px) {
+      .impact-bar {
+        height: 120px;
+        padding: 20px;
+      }
+
+      .metric-number {
+        font-size: 36px;
+      }
+
+      .metric-label {
+        font-size: 12px;
+      }
+
+      .metric-icon {
+        width: 20px;
+        height: 20px;
+      }
+
+      .metrics-container {
+        height: 70px;
+      }
+
+      .metric-divider {
+        height: 70px;
+        margin: 0 12px;
+      }
+    }
+
+    /* Mobile Responsive (Below 600px) */
+    @media (max-width: 600px) {
+      .impact-bar {
+        height: auto;
+        padding: 20px;
+      }
+
+      .metrics-container {
+        flex-direction: column;
+        height: auto;
+        gap: 0;
+        margin-bottom: 20px;
+      }
+
+      .metric-column {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        padding: 12px 0;
+        gap: 12px;
+      }
+
+      .metric-icon {
+        order: 1;
+        flex-shrink: 0;
+      }
+
+      .metric-number {
+        order: 2;
+        flex: 1;
+        text-align: center;
+        font-size: 28px;
+      }
+
+      .metric-label {
+        order: 3;
+        text-align: right;
+        flex-shrink: 0;
+        font-size: 11px;
+        max-width: 120px;
+      }
+
+      .metric-divider {
+        width: 100%;
+        height: 1px;
+        margin: 0;
+      }
+
+      .progress-track {
+        height: 10px;
+      }
+
+      .progress-labels {
+        flex-direction: column;
+        gap: 4px;
+        margin-bottom: 8px;
+      }
+
+      .progress-goal {
+        order: 2;
+      }
+    }
+
+    /* Respect reduced motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .impact-bar {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+
+      .progress-fill {
+        animation: none;
+      }
+
+      .metric-number {
+        transition: none;
+      }
+    }
   </style>
 </head>
 <body style="scroll-behavior:smooth">
@@ -79,6 +362,59 @@
       <h1>About</h1>
       <p class="lead">Montecito Racing was founded in the USA, built to expand racing opportunities for all skill levels and begin a tradition of motorsport dominance. From our drivers to our staff, we strive to instill teamwork, camaraderie, and respect everyday. No matter where we stand, we will race hard. Beyond competition, we use our platform to support cancer research at Cedars-Sinai Medical Center.</p>
       <a class="btn" href="#schedule">View Schedule</a>
+    </section>
+
+    <!-- GT3 IMPACT BAR -->
+    <section class="impact-bar" aria-label="Campaign Impact Statistics" role="region">
+      <div class="metrics-container">
+        <!-- Metric 1: Total Raised -->
+        <div class="metric-column">
+          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <div class="metric-number" data-target="2847" aria-label="Two thousand eight hundred forty-seven dollars raised">$0</div>
+          <div class="metric-label">RAISED FOR RESEARCH</div>
+        </div>
+
+        <!-- Divider -->
+        <div class="metric-divider"></div>
+
+        <!-- Metric 2: Contributors -->
+        <div class="metric-column">
+          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <div class="metric-number" data-target="23" aria-label="Twenty-three contributors">0</div>
+          <div class="metric-label">CONTRIBUTORS</div>
+        </div>
+
+        <!-- Divider -->
+        <div class="metric-divider"></div>
+
+        <!-- Metric 3: Races Completed -->
+        <div class="metric-column">
+          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+            <line x1="4" y1="22" x2="4" y2="15"></line>
+          </svg>
+          <div class="metric-number" data-target="8" aria-label="Eight races completed">0</div>
+          <div class="metric-label">RACES COMPLETED</div>
+        </div>
+      </div>
+
+      <!-- Progress Bar Section -->
+      <div class="progress-section">
+        <div class="progress-labels">
+          <span class="progress-percentage">0% funded</span>
+          <span class="progress-goal">Goal: $5,000</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-fill" style="width: 0%"></div>
+        </div>
+      </div>
     </section>
 
     <!-- BANNER -->
@@ -144,5 +480,136 @@
     <footer>© <span id="year"></span> Montecito Racing. All rights reserved.</footer>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
+
+  <script>
+    // GT3 Impact Bar - Hardcoded Data Configuration
+    const impactData = {
+      totalRaised: 2847,
+      contributors: 23,
+      racesCompleted: 8,
+      goalAmount: 5000
+    };
+
+    // Counter Animation Function
+    function animateCounter(element, target, duration, delay, prefix = '', suffix = '') {
+      const startTime = Date.now() + delay;
+      const isFirstMetric = element.closest('.metric-column') === document.querySelector('.metric-column');
+
+      function update() {
+        const now = Date.now();
+        const elapsed = now - startTime;
+
+        if (elapsed < 0) {
+          requestAnimationFrame(update);
+          return;
+        }
+
+        if (elapsed < duration) {
+          const progress = elapsed / duration;
+          // Ease-out function for smooth deceleration
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(easeOut * target);
+
+          // Format number with commas for dollar amounts
+          const formatted = prefix === '$' ? current.toLocaleString('en-US') : current;
+          element.textContent = prefix + formatted + suffix;
+
+          requestAnimationFrame(update);
+        } else {
+          // Set final value
+          const formatted = prefix === '$' ? target.toLocaleString('en-US') : target;
+          element.textContent = prefix + formatted + suffix;
+        }
+      }
+
+      requestAnimationFrame(update);
+    }
+
+    // Initialize Impact Bar on Page Load
+    function initImpactBar() {
+      const metricNumbers = document.querySelectorAll('.metric-number');
+      const progressFill = document.querySelector('.progress-fill');
+      const progressPercentage = document.querySelector('.progress-percentage');
+      const progressBar = document.querySelector('.progress-track');
+
+      // Calculate progress percentage
+      const percentage = Math.min((impactData.totalRaised / impactData.goalAmount) * 100, 100);
+
+      // Animate each metric with stagger
+      metricNumbers.forEach((numberElement, index) => {
+        const target = parseInt(numberElement.getAttribute('data-target'));
+        const delay = index * 150; // 0.15s stagger between each column
+        const duration = 1500; // 1.5s animation
+
+        // Determine prefix based on content
+        const prefix = index === 0 ? '$' : '';
+
+        animateCounter(numberElement, target, duration, delay, prefix);
+      });
+
+      // Animate progress bar
+      setTimeout(() => {
+        progressFill.style.width = percentage.toFixed(1) + '%';
+        progressPercentage.textContent = Math.round(percentage) + '% funded';
+        progressBar.setAttribute('aria-valuenow', Math.round(percentage));
+      }, 300);
+    }
+
+    // Run on DOM ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initImpactBar);
+    } else {
+      initImpactBar();
+    }
+
+    // Function to update metrics (for future use when donations come in)
+    function updateImpactMetrics(newData) {
+      // Update the data object
+      Object.assign(impactData, newData);
+
+      // Re-animate the affected metrics
+      const metricNumbers = document.querySelectorAll('.metric-number');
+      const progressFill = document.querySelector('.progress-fill');
+      const progressPercentage = document.querySelector('.progress-percentage');
+      const progressBar = document.querySelector('.progress-track');
+
+      // Update each metric if data changed
+      if (newData.totalRaised !== undefined) {
+        const element = metricNumbers[0];
+        element.style.animation = 'numberCelebrate 0.5s ease-out';
+        setTimeout(() => {
+          element.style.animation = '';
+          element.textContent = '$' + impactData.totalRaised.toLocaleString('en-US');
+        }, 500);
+      }
+
+      if (newData.contributors !== undefined) {
+        const element = metricNumbers[1];
+        element.style.animation = 'numberCelebrate 0.5s ease-out';
+        setTimeout(() => {
+          element.style.animation = '';
+          element.textContent = impactData.contributors;
+        }, 500);
+      }
+
+      if (newData.racesCompleted !== undefined) {
+        const element = metricNumbers[2];
+        element.style.animation = 'numberCelebrate 0.5s ease-out';
+        setTimeout(() => {
+          element.style.animation = '';
+          element.textContent = impactData.racesCompleted;
+        }, 500);
+      }
+
+      // Update progress bar
+      const percentage = Math.min((impactData.totalRaised / impactData.goalAmount) * 100, 100);
+      progressFill.style.width = percentage.toFixed(1) + '%';
+      progressPercentage.textContent = Math.round(percentage) + '% funded';
+      progressBar.setAttribute('aria-valuenow', Math.round(percentage));
+    }
+
+    // Example: To manually update metrics, call:
+    // updateImpactMetrics({ totalRaised: 3000, contributors: 25 });
+  </script>
 </body>
 </html>
