@@ -481,14 +481,18 @@
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
 
+  <!-- Load shared metrics configuration -->
+  <script src="metrics-config.js"></script>
+
   <script>
-    // GT3 Impact Bar - Hardcoded Data Configuration
-    const impactData = {
-      totalRaised: 2847,
-      contributors: 23,
-      racesCompleted: 8,
-      goalAmount: 5000
-    };
+    // ==========================================
+    // 📊 IMPACT METRICS - UPDATE IN metrics-config.js
+    // ==========================================
+    // To update your donation stats, edit the metrics-config.js file
+    // All changes there will automatically update here!
+    // ==========================================
+
+    const impactData = METRICS;
 
     // Counter Animation Function
     function animateCounter(element, target, duration, delay, prefix = '', suffix = '') {
