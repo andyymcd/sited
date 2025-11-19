@@ -536,6 +536,14 @@
       const progressPercentage = document.querySelector('.progress-percentage');
       const progressBar = document.querySelector('.progress-track');
 
+      // Update data-target attributes from METRICS config
+      metricNumbers[0].setAttribute('data-target', impactData.totalRaised);
+      metricNumbers[1].setAttribute('data-target', impactData.contributors);
+      metricNumbers[2].setAttribute('data-target', impactData.racesCompleted);
+
+      // Update goal text
+      document.querySelector('.progress-goal').textContent = 'Goal: $' + impactData.goalAmount.toLocaleString('en-US');
+
       // Calculate progress percentage
       const percentage = Math.min((impactData.totalRaised / impactData.goalAmount) * 100, 100);
 
