@@ -12,16 +12,16 @@
 
 const METRICS = {
   // Total amount raised in dollars (no commas or $ symbol needed)
-  totalRaised: 2847,
+  totalRaised: 0,
 
   // Number of unique contributors/donors
-  contributors: 23,
+  contributors: 0,
 
   // Total number of races completed
-  racesCompleted: 8,
+  racesCompleted: 1,
 
   // Your current fundraising goal
-  goalAmount: 5000
+  goalAmount: 1000
 };
 
 // ==========================================
