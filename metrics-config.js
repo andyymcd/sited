@@ -12,10 +12,10 @@
 
 const METRICS = {
   // Total amount raised in dollars (no commas or $ symbol needed)
-  totalRaised: 0,
+  totalRaised: 500,
 
   // Number of unique contributors/donors
-  contributors: 0,
+  contributors: 1,
 
   // Total number of races completed
   racesCompleted: 1,
