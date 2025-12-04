@@ -52,6 +52,10 @@
       color:var(--text);
       letter-spacing:-0.3px;
       white-space:nowrap;
+      text-decoration:none;
+    }
+    .logo-text:hover{
+      opacity:0.85;
     }
     .logo-text span{
       color:var(--red);
@@ -146,17 +150,18 @@
         left:0;
         right:0;
         bottom:0;
-        background:rgba(10, 18, 36, 0.98);
-        backdrop-filter:blur(40px);
-        -webkit-backdrop-filter:blur(40px);
+        background:rgba(10, 18, 36, 0.95);
+        backdrop-filter:blur(20px);
+        -webkit-backdrop-filter:blur(20px);
         flex-direction:column;
-        justify-content:center;
+        justify-content:flex-start;
         align-items:center;
         gap:8px;
-        padding:80px 32px 32px;
+        padding:100px 24px 32px;
         opacity:0;
         pointer-events:none;
-        transition:opacity 0.3s ease;
+        transition:opacity 0.25s ease;
+        z-index:999;
       }
       .nav-links.active{
         opacity:1;
@@ -164,30 +169,45 @@
       }
       .nav-links a{
         font-size:18px;
-        padding:16px 24px;
+        padding:14px 24px;
         width:100%;
-        max-width:400px;
+        max-width:320px;
         text-align:center;
-        border-radius:12px;
+        border-radius:8px;
+        background:rgba(255, 255, 255, 0.03);
+        border:1px solid rgba(255, 255, 255, 0.06);
+      }
+      .nav-links a:hover{
+        background:rgba(255, 255, 255, 0.08);
+      }
+      .nav-links a.active:not(.btn-primary){
+        background:rgba(255, 255, 255, 0.08);
+        border-color:rgba(214, 30, 46, 0.3);
       }
       .nav-links a.active:not(.btn-primary)::after{
-        left:24px;
-        right:24px;
+        display:none;
       }
       .btn-primary{
         margin-top:16px;
         padding:14px 28px;
         font-size:16px;
+        background:var(--red);
+        border-color:var(--red);
       }
       .menu-button{
         display:flex;
+        z-index:1001;
       }
+    }
+    /* Body scroll lock */
+    body.nav-open{
+      overflow:hidden;
     }
 
     /* Logo */
     .logo-wrap{
       display:flex; align-items:center; justify-content:center;
-      padding:28px; border:1px solid var(--border); border-radius:16px;
+      padding:24px; border:1px solid rgba(148, 163, 184, 0.15); border-radius:8px;
       background:linear-gradient(180deg,var(--navy-2),#0b162f);
       min-height:180px; margin-bottom:24px;
     }
@@ -221,16 +241,16 @@
       margin:32px 0;
       padding:20px;
       background:linear-gradient(180deg,var(--navy-2),#0b162f);
-      border:1px solid var(--border);
-      border-radius:16px;
+      border:1px solid rgba(148, 163, 184, 0.12);
+      border-radius:8px;
     }
 
     .category-btn{
       padding:10px 20px;
       background:transparent;
-      border:1px solid var(--border);
+      border:1px solid rgba(148, 163, 184, 0.2);
       color:var(--text);
-      border-radius:8px;
+      border-radius:6px;
       cursor:pointer;
       font-weight:600;
       font-size:14px;
@@ -253,20 +273,20 @@
 
     .gallery-item{
       position:relative;
-      border-radius:12px;
+      border-radius:8px;
       overflow:hidden;
-      border:1px solid var(--border);
+      border:1px solid rgba(148, 163, 184, 0.12);
       background:var(--navy-2);
       transition:transform 0.3s ease, box-shadow 0.3s ease;
       cursor:pointer;
     }
 
     .gallery-item:hover{
-      transform:translateY(-5px);
+      transform:translateY(-4px);
       box-shadow:
-        0 0 20px rgba(214, 30, 46, 0.3),
-        0 10px 30px rgba(0, 0, 0, 0.5);
-      border-color:var(--red);
+        0 0 16px rgba(214, 30, 46, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.4);
+      border-color:rgba(214, 30, 46, 0.4);
     }
 
     .gallery-item img{
@@ -299,9 +319,9 @@
     .gallery-tag{
       display:inline-block;
       padding:4px 10px;
-      background:rgba(214, 30, 46, 0.15);
-      border:1px solid rgba(214, 30, 46, 0.3);
-      border-radius:6px;
+      background:rgba(214, 30, 46, 0.1);
+      border:1px solid rgba(214, 30, 46, 0.2);
+      border-radius:4px;
       font-size:11px;
       color:var(--red);
       font-weight:600;
@@ -314,8 +334,8 @@
       text-align:center;
       padding:80px 20px;
       background:linear-gradient(180deg,var(--navy-2),#0b162f);
-      border:2px dashed var(--border);
-      border-radius:16px;
+      border:1px dashed rgba(148, 163, 184, 0.2);
+      border-radius:8px;
       margin:40px 0;
     }
 
@@ -359,8 +379,8 @@
     .lightbox-content img{
       max-width:100%;
       max-height:90vh;
-      border-radius:12px;
-      box-shadow:0 0 50px rgba(0, 0, 0, 0.8);
+      border-radius:8px;
+      box-shadow:0 0 40px rgba(0, 0, 0, 0.7);
     }
 
     .lightbox-close{
@@ -370,10 +390,10 @@
       background:var(--red);
       color:#fff;
       border:none;
-      width:40px;
-      height:40px;
-      border-radius:50%;
-      font-size:24px;
+      width:36px;
+      height:36px;
+      border-radius:6px;
+      font-size:20px;
       cursor:pointer;
       display:flex;
       align-items:center;
@@ -381,20 +401,42 @@
     }
 
     .lightbox-close:hover{
-      opacity:0.8;
+      opacity:0.85;
     }
 
     /* Section Headers */
     .section-header{
       margin:48px 0 24px;
       padding-bottom:12px;
-      border-bottom:2px solid var(--border);
+      border-bottom:1px solid rgba(148, 163, 184, 0.15);
     }
 
     .section-header h2{
       font-size:clamp(24px, 4vw, 32px);
       margin:0;
       color:#fff;
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-block;
+      padding:10px 20px;
+      background:transparent;
+      border:1px solid rgba(148, 163, 184, 0.3);
+      color:var(--text);
+      border-radius:6px;
+      font-weight:500;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.2s ease;
+      text-decoration:none;
+    }
+    .btn:hover{
+      background:rgba(255, 255, 255, 0.08);
+      border-color:rgba(148, 163, 184, 0.5);
+    }
+    .btn.alt{
+      background:rgba(255, 255, 255, 0.05);
     }
 
     footer{margin:48px 0 28px; text-align:center; color:var(--muted); font-size:14px}
@@ -428,7 +470,7 @@
   <!-- Modern Sticky Header -->
   <header>
     <nav class="nav-container">
-      <div class="logo-text">MONTECITO <span>RACING</span></div>
+      <a href="index.html" class="logo-text">MONTECITO <span>RACING</span></a>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="our-story.html">Our Story</a>
@@ -437,14 +479,14 @@
         <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
         <a href="index.html#charity" class="btn-primary">Donate</a>
       </div>
-      <div class="menu-button" onclick="toggleMenu()">
+      <button class="menu-button" onclick="toggleMenu()" aria-label="Toggle menu">
         <div class="hamburger">
           <span></span>
           <span></span>
           <span></span>
         </div>
         <span>Menu</span>
-      </div>
+      </button>
     </nav>
   </header>
 
@@ -605,37 +647,46 @@
     function toggleMenu() {
       const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
+      const isOpen = navLinks.classList.contains('active');
+
       menuButton.classList.toggle('active');
       navLinks.classList.toggle('active');
-      document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+
+      if (!isOpen) {
+        document.body.classList.add('nav-open');
+      } else {
+        document.body.classList.remove('nav-open');
+      }
     }
-    document.addEventListener('click', (e) => {
+
+    function closeMenu() {
       const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
+      menuButton.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('nav-open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const navLinks = document.querySelector('.nav-links');
       if (navLinks.classList.contains('active') && e.target === navLinks) {
-        menuButton.classList.remove('active');
-        navLinks.classList.remove('active');
-        document.body.style.overflow = '';
+        closeMenu();
       }
     });
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        const menuButton = document.querySelector('.menu-button');
-        const navLinks = document.querySelector('.nav-links');
-        menuButton.classList.remove('active');
-        navLinks.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMenu);
     });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const menuButton = document.querySelector('.menu-button');
         const navLinks = document.querySelector('.nav-links');
         if (navLinks.classList.contains('active')) {
-          menuButton.classList.remove('active');
-          navLinks.classList.remove('active');
-          document.body.style.overflow = '';
+          closeMenu();
         }
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeMenu();
       }
     });
   </script>
