@@ -52,6 +52,10 @@
       color:var(--text);
       letter-spacing:-0.3px;
       white-space:nowrap;
+      text-decoration:none;
+    }
+    .logo-text:hover{
+      opacity:0.85;
     }
     .logo-text span{
       color:var(--red);
@@ -152,17 +156,18 @@
         left:0;
         right:0;
         bottom:0;
-        background:rgba(10, 18, 36, 0.98);
-        backdrop-filter:blur(40px);
-        -webkit-backdrop-filter:blur(40px);
+        background:rgba(10, 18, 36, 0.95);
+        backdrop-filter:blur(20px);
+        -webkit-backdrop-filter:blur(20px);
         flex-direction:column;
-        justify-content:center;
+        justify-content:flex-start;
         align-items:center;
         gap:8px;
-        padding:80px 32px 32px;
+        padding:100px 24px 32px;
         opacity:0;
         pointer-events:none;
-        transition:opacity 0.3s ease;
+        transition:opacity 0.25s ease;
+        z-index:999;
       }
       .nav-links.active{
         opacity:1;
@@ -170,49 +175,117 @@
       }
       .nav-links a{
         font-size:18px;
-        padding:16px 24px;
+        padding:14px 24px;
         width:100%;
-        max-width:400px;
+        max-width:320px;
         text-align:center;
-        border-radius:12px;
+        border-radius:8px;
+        background:rgba(255, 255, 255, 0.03);
+        border:1px solid rgba(255, 255, 255, 0.06);
+      }
+      .nav-links a:hover{
+        background:rgba(255, 255, 255, 0.08);
+      }
+      .nav-links a.active:not(.btn-primary){
+        background:rgba(255, 255, 255, 0.08);
+        border-color:rgba(214, 30, 46, 0.3);
       }
       .nav-links a.active:not(.btn-primary)::after{
-        left:24px;
-        right:24px;
+        display:none;
       }
       .btn-primary{
         margin-top:16px;
         padding:14px 28px;
         font-size:16px;
+        background:var(--red);
+        border-color:var(--red);
       }
       .menu-button{
         display:flex;
+        z-index:1001;
       }
+
+      /* Mobile overlay header */
+      .mobile-overlay-header{
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        padding:14px 24px;
+        justify-content:space-between;
+        align-items:center;
+        z-index:1000;
+        background:transparent;
+      }
+      .nav-links.active ~ .menu-button + .mobile-overlay-header,
+      body.nav-open .mobile-overlay-header{
+        display:flex;
+      }
+      .mobile-close-btn{
+        width:40px;
+        height:40px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        background:rgba(255, 255, 255, 0.08);
+        border:1px solid rgba(255, 255, 255, 0.1);
+        border-radius:8px;
+        color:var(--text);
+        font-size:24px;
+        cursor:pointer;
+        transition:all 0.2s ease;
+      }
+      .mobile-close-btn:hover{
+        background:rgba(255, 255, 255, 0.12);
+      }
+    }
+    /* Body scroll lock */
+    body.nav-open{
+      overflow:hidden;
     }
     /* logo section */
     .logo-wrap{
       display:flex; align-items:center; justify-content:center;
-      padding:28px; border:1px solid var(--border); border-radius:16px; background:linear-gradient(180deg,var(--navy-2),#0b162f);
+      padding:24px; border:1px solid rgba(148, 163, 184, 0.15); border-radius:8px; background:linear-gradient(180deg,var(--navy-2),#0b162f);
       min-height:180px;
     }
     .logo-wrap img{max-height:clamp(120px, 18vw, 220px); width:auto; object-fit:contain}
     /* banner */
     .banner{
       margin:18px 0;
-      border-radius:16px; overflow:hidden; border:1px solid var(--border);
+      border-radius:8px; overflow:hidden; border:1px solid rgba(148, 163, 184, 0.15);
       background:#0f1b36;
     }
     .banner img{display:block; width:100%; height:300px; object-fit:cover}
     /* sections */
     h1{font-size:clamp(24px,4vw,40px); margin:8px 0 6px}
-    h2{font-size:clamp(18px,3vw,26px); margin:0 0 8px; border-left:6px solid var(--red); padding-left:10px}
+    h2{font-size:clamp(18px,3vw,26px); margin:0 0 12px; border-left:4px solid var(--red); padding-left:12px}
     p.lead{color:#d7def1; margin:0 0 14px}
-    .card{background:linear-gradient(180deg,var(--navy-2),#0b162f); border:1px solid var(--border); border-radius:16px; padding:18px; margin:16px 0}
+    .card{background:linear-gradient(180deg,var(--navy-2),#0b162f); border:1px solid rgba(148, 163, 184, 0.12); border-radius:8px; padding:24px; margin:16px 0}
     .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
     @media (max-width:900px){ .grid{grid-template-columns:1fr} }
     ul.list{list-style:none; padding:0; margin:0}
-    ul.list li{padding:10px 0; border-bottom:1px dashed var(--border)}
+    ul.list li{padding:12px 0; border-bottom:1px solid rgba(148, 163, 184, 0.15)}
+    ul.list li:last-child{border-bottom:none}
     footer{margin:28px 0; text-align:center; color:var(--muted); font-size:14px}
+    /* Buttons */
+    .btn{
+      display:inline-block;
+      padding:10px 20px;
+      background:transparent;
+      border:1px solid rgba(148, 163, 184, 0.3);
+      color:var(--text);
+      border-radius:6px;
+      font-weight:500;
+      font-size:14px;
+      cursor:pointer;
+      transition:all 0.2s ease;
+    }
+    .btn:hover{
+      background:rgba(255, 255, 255, 0.08);
+      border-color:rgba(148, 163, 184, 0.5);
+    }
     /* Mobile optimizations */
     @media (max-width:600px){
       .banner img{height:200px}
@@ -225,44 +298,30 @@
     /* ===== GT3 IMPACT BAR STYLES ===== */
     .impact-bar {
       margin: 24px 0;
-      padding: 32px 32px 32px 32px;
+      padding: 28px 28px 24px;
       max-width: 1000px;
-      background: linear-gradient(180deg, rgba(14, 26, 51, 1) 0%, rgba(10, 18, 36, 1) 100%);
-      border: 1.5px solid var(--red);
-      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(14, 26, 51, 0.8) 0%, rgba(10, 18, 36, 0.9) 100%);
+      border: 1px solid rgba(214, 30, 46, 0.3);
+      border-radius: 8px;
       position: relative;
-      /* Triple shadow for GT3 glow effect */
-      box-shadow:
-        inset 0 0 20px rgba(214, 30, 46, 0.15),  /* inner red glow */
-        0 0 30px rgba(214, 30, 46, 0.25),         /* outer red halo */
-        0 8px 24px rgba(0, 0, 0, 0.4);            /* depth shadow */
-
-      /* Fade in from below on load */
+      box-shadow: 0 0 20px rgba(214, 30, 46, 0.1), 0 4px 16px rgba(0, 0, 0, 0.2);
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.6s ease-out 0.3s forwards;
+      transform: translateY(12px);
+      animation: fadeInUp 0.5s ease-out 0.2s forwards;
     }
 
     /* Subtle pulse animation - heartbeat effect */
     @keyframes subtlePulse {
       0%, 100% {
-        transform: scale(1);
-        box-shadow:
-          inset 0 0 20px rgba(214, 30, 46, 0.15),
-          0 0 30px rgba(214, 30, 46, 0.25),
-          0 8px 24px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 20px rgba(214, 30, 46, 0.1), 0 4px 16px rgba(0, 0, 0, 0.2);
       }
-      30% {
-        transform: scale(1.005);
-        box-shadow:
-          inset 0 0 20px rgba(214, 30, 46, 0.2),
-          0 0 30px rgba(214, 30, 46, 0.35),
-          0 8px 24px rgba(0, 0, 0, 0.4);
+      50% {
+        box-shadow: 0 0 24px rgba(214, 30, 46, 0.15), 0 4px 16px rgba(0, 0, 0, 0.2);
       }
     }
 
     .impact-bar {
-      animation: fadeInUp 0.6s ease-out 0.3s forwards, subtlePulse 4s ease-in-out 2s infinite;
+      animation: fadeInUp 0.5s ease-out 0.2s forwards, subtlePulse 4s ease-in-out 2s infinite;
     }
 
     /* Fade in animation */
@@ -275,11 +334,8 @@
 
     /* Hover state - intensify glow */
     .impact-bar:hover {
-      box-shadow:
-        inset 0 0 20px rgba(214, 30, 46, 0.2),
-        0 0 30px rgba(214, 30, 46, 0.45),
-        0 8px 24px rgba(0, 0, 0, 0.4);
-      border-color: #e63946;
+      box-shadow: 0 0 28px rgba(214, 30, 46, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
+      border-color: rgba(214, 30, 46, 0.5);
       transition: all 0.3s ease;
     }
 
@@ -363,11 +419,11 @@
 
     /* Progress Track */
     .progress-track {
-      height: 8px;
+      height: 6px;
       width: 100%;
-      background: rgba(169, 181, 209, 0.15);
-      border: 1px solid rgba(169, 181, 209, 0.2);
-      border-radius: 4px;
+      background: rgba(169, 181, 209, 0.12);
+      border: none;
+      border-radius: 3px;
       overflow: hidden;
       position: relative;
     }
@@ -376,16 +432,9 @@
     .progress-fill {
       height: 100%;
       background: linear-gradient(90deg, #d61e2e 0%, #e63946 50%, #ff4757 100%);
-      border-radius: 4px;
+      border-radius: 3px;
       transition: width 0.8s ease-out;
-      box-shadow: 0 0 8px rgba(214, 30, 46, 0.6);
-      animation: progressPulse 2s ease-in-out infinite;
-    }
-
-    /* Progress bar pulse */
-    @keyframes progressPulse {
-      0%, 100% { opacity: 0.9; }
-      50% { opacity: 1; box-shadow: 0 0 12px rgba(214, 30, 46, 0.8); }
+      box-shadow: 0 0 6px rgba(214, 30, 46, 0.5);
     }
 
     /* Number update celebration animation */
@@ -509,7 +558,7 @@
   <!-- Modern Sticky Header -->
   <header>
     <nav class="nav-container">
-      <div class="logo-text">MONTECITO <span>RACING</span></div>
+      <a href="index.html" class="logo-text">MONTECITO <span>RACING</span></a>
       <div class="nav-links">
         <a href="index.html" class="active">Home</a>
         <a href="our-story.html">Our Story</a>
@@ -518,14 +567,14 @@
         <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
         <a href="#charity" class="btn-primary">Donate</a>
       </div>
-      <div class="menu-button" onclick="toggleMenu()">
+      <button class="menu-button" onclick="toggleMenu()" aria-label="Toggle menu">
         <div class="hamburger">
           <span></span>
           <span></span>
           <span></span>
         </div>
         <span>Menu</span>
-      </div>
+      </button>
     </nav>
   </header>
 
@@ -807,45 +856,54 @@
     function toggleMenu() {
       const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
+      const isOpen = navLinks.classList.contains('active');
+
       menuButton.classList.toggle('active');
       navLinks.classList.toggle('active');
-      // Prevent body scroll when menu is open
-      document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+
+      // Toggle body scroll lock
+      if (!isOpen) {
+        document.body.classList.add('nav-open');
+      } else {
+        document.body.classList.remove('nav-open');
+      }
+    }
+
+    function closeMenu() {
+      const menuButton = document.querySelector('.menu-button');
+      const navLinks = document.querySelector('.nav-links');
+      menuButton.classList.remove('active');
+      navLinks.classList.remove('active');
+      document.body.classList.remove('nav-open');
     }
 
     // Close menu when clicking on the overlay (not on a link)
     document.addEventListener('click', (e) => {
-      const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
-      if (navLinks.classList.contains('active') &&
-          e.target === navLinks) {
-        menuButton.classList.remove('active');
-        navLinks.classList.remove('active');
-        document.body.style.overflow = '';
+      if (navLinks.classList.contains('active') && e.target === navLinks) {
+        closeMenu();
       }
     });
 
     // Close menu when clicking a link
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        const menuButton = document.querySelector('.menu-button');
-        const navLinks = document.querySelector('.nav-links');
-        menuButton.classList.remove('active');
-        navLinks.classList.remove('active');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMenu);
     });
 
     // Close menu on escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const menuButton = document.querySelector('.menu-button');
         const navLinks = document.querySelector('.nav-links');
         if (navLinks.classList.contains('active')) {
-          menuButton.classList.remove('active');
-          navLinks.classList.remove('active');
-          document.body.style.overflow = '';
+          closeMenu();
         }
+      }
+    });
+
+    // Handle resize - close menu if window becomes wider than mobile breakpoint
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeMenu();
       }
     });
   </script>
