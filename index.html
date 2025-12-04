@@ -6,764 +6,605 @@
   <title>Montecito Racing — GT Endurance Sim Team</title>
   <style>
     :root{
-      --navy:#0a1224;       /* dark navy */
-      --navy-2:#0e1a33;     /* deeper card */
-      --red:#d61e2e;        /* team red */
-      --red-hover:#ff4757;  /* brighter red on hover */
-      --text:#f2f6ff;       /* light text */
-      --muted:#a9b5d1;
-      --border:#1d2a4a;
+      --navy:#0a0a0f;
+      --navy-light:#16161f;
+      --red:#d61e2e;
+      --red-hover:#e63946;
+      --text:#ffffff;
+      --text-secondary:#94a3b8;
+      --border:rgba(148, 163, 184, 0.12);
+      --spacing-xs:16px;
+      --spacing-sm:24px;
+      --spacing-md:32px;
+      --spacing-lg:48px;
+      --spacing-xl:64px;
+      --radius:6px;
     }
+
     *{box-sizing:border-box; margin:0; padding:0}
-    html,body{height:100%}
+
+    html{scroll-behavior:smooth}
+
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
-      background:linear-gradient(180deg,var(--navy),#0b152e 60%,#0a142b);
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+      background:var(--navy);
       color:var(--text);
       line-height:1.6;
+      font-size:17px;
     }
-    a{color:var(--text); text-decoration:none; transition:all 0.3s ease}
-    .container{max-width:1000px; margin:0 auto; padding:20px}
 
-    /* ===== ENHANCED MODERN HEADER ===== */
+    body.nav-open{overflow:hidden}
+
+    a{color:inherit; text-decoration:none; transition:opacity 0.2s ease}
+    a:hover{opacity:0.8}
+
+    /* MODERN HEADER */
     header{
       position:sticky;
       top:0;
-      z-index:1000;
-      background:rgba(10, 18, 36, 0.85);
-      backdrop-filter:saturate(180%) blur(24px);
-      -webkit-backdrop-filter:saturate(180%) blur(24px);
-      border-bottom:2px solid rgba(214, 30, 46, 0.3);
-      box-shadow:0 4px 20px rgba(0, 0, 0, 0.3);
-      transition:all 0.3s ease;
+      z-index:100;
+      background:rgba(10, 10, 15, 0.8);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
     }
-    header:hover{
-      border-bottom-color:rgba(214, 30, 46, 0.5);
-    }
+
     .nav-container{
       max-width:1280px;
       margin:0 auto;
-      padding:16px 28px;
+      padding:20px var(--spacing-sm);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:20px;
     }
+
+    .logo-link{
+      display:inline-flex;
+      align-items:center;
+      cursor:pointer;
+    }
+
     .logo-text{
-      font-size:20px;
-      font-weight:700;
+      font-size:18px;
+      font-weight:600;
       color:var(--text);
-      letter-spacing:-0.5px;
-      white-space:nowrap;
-      text-shadow:0 2px 8px rgba(214, 30, 46, 0.4);
-      transition:all 0.3s ease;
+      letter-spacing:-0.02em;
     }
-    .logo-text:hover{
-      text-shadow:0 2px 12px rgba(214, 30, 46, 0.6);
-      transform:translateY(-1px);
-    }
+
     .logo-text span{
       color:var(--red);
+      margin-left:4px;
     }
 
-    /* Desktop Navigation */
+    /* Desktop Nav */
     .nav-links{
-      display:flex;
-      gap:6px;
+      display:none;
+      gap:4px;
       align-items:center;
     }
-    .nav-links a{
-      padding:10px 16px;
-      border-radius:10px;
-      font-weight:500;
-      font-size:15px;
-      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      white-space:nowrap;
-      position:relative;
-      border:1px solid transparent;
-    }
-    .nav-links a:not(.btn-primary):hover{
-      background:rgba(255, 255, 255, 0.1);
-      border-color:rgba(255, 255, 255, 0.1);
-      transform:translateY(-2px);
-    }
-    .nav-links a.active:not(.btn-primary){
-      color:var(--text);
-      background:rgba(214, 30, 46, 0.15);
-      border-color:rgba(214, 30, 46, 0.3);
-    }
-    .nav-links a.active:not(.btn-primary)::after{
-      content:'';
-      position:absolute;
-      bottom:0;
-      left:16px;
-      right:16px;
-      height:3px;
-      background:linear-gradient(90deg, var(--red), var(--red-hover));
-      border-radius:3px;
-      box-shadow:0 0 8px rgba(214, 30, 46, 0.6);
-    }
-    .btn-primary{
-      background:linear-gradient(135deg, var(--red), #e63946);
-      color:#fff !important;
-      font-weight:600;
-      padding:10px 20px;
-      box-shadow:0 4px 12px rgba(214, 30, 46, 0.4);
-      border:1px solid rgba(255, 255, 255, 0.1);
-    }
-    .btn-primary:hover{
-      background:linear-gradient(135deg, var(--red-hover), #ff5865);
-      transform:translateY(-2px);
-      box-shadow:0 6px 16px rgba(214, 30, 46, 0.6);
+
+    @media (min-width:769px){
+      .nav-links{display:flex}
     }
 
-    /* Mobile Menu Overlay Backdrop */
-    .menu-overlay{
+    .nav-links a{
+      padding:8px 14px;
+      border-radius:var(--radius);
+      font-weight:500;
+      font-size:15px;
+      white-space:nowrap;
+    }
+
+    .nav-links a:not(.btn-primary):hover{
+      background:rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-links a.active:not(.btn-primary){
+      color:var(--text);
+    }
+
+    .btn-primary{
+      background:var(--red);
+      color:#fff;
+      font-weight:600;
+      padding:8px 16px;
+      border-radius:var(--radius);
+    }
+
+    .btn-primary:hover{
+      background:var(--red-hover);
+      opacity:1;
+    }
+
+    /* Mobile Menu Button */
+    .menu-button{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      color:var(--text);
+      font-size:15px;
+      font-weight:500;
+    }
+
+    @media (min-width:769px){
+      .menu-button{display:none}
+    }
+
+    .hamburger{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      width:20px;
+    }
+
+    .hamburger span{
+      width:100%;
+      height:2px;
+      background:var(--text);
+      border-radius:2px;
+      transition:all 0.3s ease;
+    }
+
+    .menu-button.active .hamburger span:nth-child(1){
+      transform:rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-button.active .hamburger span:nth-child(2){
+      opacity:0;
+    }
+
+    .menu-button.active .hamburger span:nth-child(3){
+      transform:rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* FULL-SCREEN MOBILE OVERLAY */
+    .mobile-menu-overlay{
       position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      background:rgba(0, 0, 0, 0.85);
-      backdrop-filter:blur(4px);
-      -webkit-backdrop-filter:blur(4px);
+      inset:0;
+      padding:var(--spacing-sm);
+      display:flex;
+      flex-direction:column;
+      gap:var(--spacing-sm);
+      background:rgba(10, 10, 15, 0.98);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      color:#fff;
+      z-index:200;
       opacity:0;
       pointer-events:none;
       transition:opacity 0.3s ease;
-      z-index:999;
     }
-    .menu-overlay.active{
+
+    .mobile-menu-overlay.active{
       opacity:1;
       pointer-events:all;
     }
 
-    /* Hamburger Button */
-    .menu-button{
-      display:none;
+    .mobile-menu-header{
+      display:flex;
       align-items:center;
-      gap:10px;
-      padding:10px 16px;
-      background:rgba(214, 30, 46, 0.15);
-      border:1px solid rgba(214, 30, 46, 0.3);
-      border-radius:10px;
-      cursor:pointer;
-      transition:all 0.3s ease;
-      font-size:14px;
-      font-weight:600;
-      color:var(--text);
-      box-shadow:0 2px 8px rgba(214, 30, 46, 0.2);
+      justify-content:space-between;
+      padding-bottom:var(--spacing-sm);
+      border-bottom:1px solid var(--border);
     }
-    .menu-button:hover{
-      background:rgba(214, 30, 46, 0.25);
-      border-color:rgba(214, 30, 46, 0.5);
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(214, 30, 46, 0.4);
-    }
-    .menu-button.active{
-      background:rgba(214, 30, 46, 0.3);
-      border-color:rgba(214, 30, 46, 0.6);
-    }
-    .hamburger{
+
+    .mobile-menu-nav{
       display:flex;
       flex-direction:column;
-      gap:5px;
-      width:20px;
+      gap:4px;
+      padding-top:var(--spacing-sm);
     }
-    .hamburger span{
+
+    .mobile-menu-nav a{
+      padding:16px;
+      border-radius:var(--radius);
+      font-size:18px;
+      font-weight:500;
+    }
+
+    .mobile-menu-nav a:hover{
+      background:rgba(255, 255, 255, 0.08);
+      opacity:1;
+    }
+
+    .mobile-menu-nav a.active{
+      background:rgba(214, 30, 46, 0.15);
+    }
+
+    /* CONTAINER */
+    .container{
+      max-width:1280px;
+      margin:0 auto;
+      padding:var(--spacing-lg) var(--spacing-sm);
+    }
+
+    /* SECTIONS */
+    section{
+      margin-bottom:var(--spacing-xl);
+    }
+
+    .section-minimal{
+      padding:var(--spacing-lg) 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .section-minimal:last-child{
+      border-bottom:none;
+    }
+
+    /* TYPOGRAPHY */
+    h1{
+      font-size:clamp(36px, 5vw, 56px);
+      font-weight:600;
+      line-height:1.1;
+      letter-spacing:-0.02em;
+      margin-bottom:var(--spacing-sm);
+    }
+
+    h2{
+      font-size:clamp(28px, 4vw, 40px);
+      font-weight:600;
+      line-height:1.2;
+      letter-spacing:-0.02em;
+      margin-bottom:var(--spacing-xs);
+    }
+
+    h3{
+      font-size:clamp(20px, 3vw, 24px);
+      font-weight:600;
+      line-height:1.3;
+      margin-bottom:12px;
+    }
+
+    p{
+      color:var(--text-secondary);
+      margin-bottom:16px;
+      max-width:70ch;
+    }
+
+    p.lead{
+      font-size:20px;
+      line-height:1.6;
+      color:var(--text);
+    }
+
+    /* CARDS - Minimal Style */
+    .card{
+      background:rgba(255, 255, 255, 0.02);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:var(--spacing-md);
+    }
+
+    .card-hover{
+      transition:all 0.2s ease;
+    }
+
+    .card-hover:hover{
+      background:rgba(255, 255, 255, 0.04);
+      border-color:rgba(148, 163, 184, 0.2);
+    }
+
+    /* GRID */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:var(--spacing-sm);
+    }
+
+    /* LOGO SECTION */
+    .logo-section{
+      text-align:center;
+      padding:var(--spacing-xl) 0;
+    }
+
+    .logo-section img{
+      max-width:300px;
+      height:auto;
+      opacity:0.95;
+    }
+
+    /* HERO */
+    .hero{
+      text-align:center;
+      padding:var(--spacing-xl) 0;
+    }
+
+    .hero h1{
+      max-width:20ch;
+      margin:0 auto var(--spacing-sm);
+    }
+
+    .hero p{
+      margin:0 auto var(--spacing-md);
+      max-width:60ch;
+    }
+
+    /* METRICS BAR */
+    .metrics-bar{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:var(--spacing-md);
+      padding:var(--spacing-lg) 0;
+    }
+
+    .metric{
+      text-align:center;
+    }
+
+    .metric-number{
+      font-size:clamp(32px, 5vw, 48px);
+      font-weight:600;
+      color:var(--red);
+      line-height:1;
+      margin-bottom:8px;
+    }
+
+    .metric-label{
+      font-size:14px;
+      color:var(--text-secondary);
+      text-transform:uppercase;
+      letter-spacing:0.05em;
+    }
+
+    /* PROGRESS BAR */
+    .progress-section{
+      padding:var(--spacing-md) 0;
+    }
+
+    .progress-labels{
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:12px;
+      font-size:14px;
+    }
+
+    .progress-percentage{
+      color:var(--text);
+      font-weight:600;
+    }
+
+    .progress-goal{
+      color:var(--text-secondary);
+    }
+
+    .progress-track{
+      height:8px;
       width:100%;
-      height:2.5px;
-      background:var(--text);
-      border-radius:3px;
-      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-    .menu-button.active .hamburger span:nth-child(1){
-      transform:rotate(45deg) translate(7px, 7px);
-    }
-    .menu-button.active .hamburger span:nth-child(2){
-      opacity:0;
-      transform:translateX(-10px);
-    }
-    .menu-button.active .hamburger span:nth-child(3){
-      transform:rotate(-45deg) translate(7px, -7px);
+      background:rgba(148, 163, 184, 0.1);
+      border-radius:4px;
+      overflow:hidden;
     }
 
-    /* Mobile Menu - Slide-in Sidebar */
+    .progress-fill{
+      height:100%;
+      background:linear-gradient(90deg, var(--red), var(--red-hover));
+      border-radius:4px;
+      transition:width 0.8s ease;
+    }
+
+    /* BUTTON STYLES */
+    .btn{
+      display:inline-block;
+      padding:12px 24px;
+      background:rgba(255, 255, 255, 0.08);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      font-weight:500;
+      transition:all 0.2s ease;
+    }
+
+    .btn:hover{
+      background:rgba(255, 255, 255, 0.12);
+      border-color:rgba(148, 163, 184, 0.3);
+      opacity:1;
+    }
+
+    /* FOOTER */
+    footer{
+      padding:var(--spacing-lg) 0;
+      text-align:center;
+      color:var(--text-secondary);
+      font-size:14px;
+      border-top:1px solid var(--border);
+    }
+
+    /* RESPONSIVE */
     @media (max-width:768px){
-      .nav-links{
-        position:fixed;
-        top:0;
-        right:0;
-        bottom:0;
-        width:85%;
-        max-width:320px;
-        background:linear-gradient(180deg, rgb(14, 26, 51), rgb(10, 18, 36));
-        backdrop-filter:blur(0px);
-        -webkit-backdrop-filter:blur(0px);
-        border-left:2px solid rgba(214, 30, 46, 0.8);
-        box-shadow:-4px 0 24px rgba(0, 0, 0, 0.8);
-        flex-direction:column;
-        justify-content:flex-start;
-        align-items:stretch;
-        gap:4px;
-        padding:80px 20px 32px;
-        transform:translateX(100%);
-        transition:transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index:1000;
-        overflow-y:auto;
-      }
-      .nav-links.active{
-        transform:translateX(0);
-      }
-      .nav-links a{
-        font-size:16px;
-        padding:16px 20px;
-        width:100%;
-        text-align:left;
-        border-radius:10px;
-        border:1px solid transparent;
-      }
-      .nav-links a:not(.btn-primary):hover{
-        background:rgba(255, 255, 255, 0.1);
-        border-color:rgba(255, 255, 255, 0.15);
-      }
-      .nav-links a.active:not(.btn-primary){
-        background:rgba(214, 30, 46, 0.2);
-        border-color:rgba(214, 30, 46, 0.4);
-      }
-      .nav-links a.active:not(.btn-primary)::after{
-        left:0;
-        right:auto;
-        width:4px;
-        height:100%;
-        top:0;
-        bottom:0;
-        border-radius:0 3px 3px 0;
-      }
-      .btn-primary{
-        margin-top:16px;
-        padding:16px 24px;
-        font-size:16px;
-        text-align:center;
-      }
-      .menu-button{
-        display:flex;
-      }
-    }
-    /* logo section */
-    .logo-wrap{
-      display:flex; align-items:center; justify-content:center;
-      padding:28px; border:1px solid var(--border); border-radius:16px; background:linear-gradient(180deg,var(--navy-2),#0b162f);
-      min-height:180px;
-    }
-    .logo-wrap img{max-height:clamp(120px, 18vw, 220px); width:auto; object-fit:contain}
-    /* banner */
-    .banner{
-      margin:18px 0;
-      border-radius:16px; overflow:hidden; border:1px solid var(--border);
-      background:#0f1b36;
-    }
-    .banner img{display:block; width:100%; height:300px; object-fit:cover}
-    /* sections */
-    h1{font-size:clamp(24px,4vw,40px); margin:8px 0 6px}
-    h2{font-size:clamp(18px,3vw,26px); margin:0 0 8px; border-left:6px solid var(--red); padding-left:10px}
-    p.lead{color:#d7def1; margin:0 0 14px}
-    .card{background:linear-gradient(180deg,var(--navy-2),#0b162f); border:1px solid var(--border); border-radius:16px; padding:18px; margin:16px 0}
-    .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-    @media (max-width:900px){ .grid{grid-template-columns:1fr} }
-    ul.list{list-style:none; padding:0; margin:0}
-    ul.list li{padding:10px 0; border-bottom:1px dashed var(--border)}
-    footer{margin:28px 0; text-align:center; color:var(--muted); font-size:14px}
-    /* Mobile optimizations */
-    @media (max-width:600px){
-      .banner img{height:200px}
-      .logo-wrap{padding:20px; min-height:140px}
-      .logo-wrap img{max-height:140px; max-width:85vw}
-      .container{padding:16px}
-      .card{padding:20px; margin:12px 0}
-    }
-
-    /* ===== GT3 IMPACT BAR STYLES ===== */
-    .impact-bar {
-      margin: 24px 0;
-      padding: 32px 32px 32px 32px;
-      max-width: 1000px;
-      background: linear-gradient(180deg, rgba(14, 26, 51, 1) 0%, rgba(10, 18, 36, 1) 100%);
-      border: 1.5px solid var(--red);
-      border-radius: 16px;
-      position: relative;
-      /* Triple shadow for GT3 glow effect */
-      box-shadow:
-        inset 0 0 20px rgba(214, 30, 46, 0.15),  /* inner red glow */
-        0 0 30px rgba(214, 30, 46, 0.25),         /* outer red halo */
-        0 8px 24px rgba(0, 0, 0, 0.4);            /* depth shadow */
-
-      /* Fade in from below on load */
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.6s ease-out 0.3s forwards;
-    }
-
-    /* Subtle pulse animation - heartbeat effect */
-    @keyframes subtlePulse {
-      0%, 100% {
-        transform: scale(1);
-        box-shadow:
-          inset 0 0 20px rgba(214, 30, 46, 0.15),
-          0 0 30px rgba(214, 30, 46, 0.25),
-          0 8px 24px rgba(0, 0, 0, 0.4);
-      }
-      30% {
-        transform: scale(1.005);
-        box-shadow:
-          inset 0 0 20px rgba(214, 30, 46, 0.2),
-          0 0 30px rgba(214, 30, 46, 0.35),
-          0 8px 24px rgba(0, 0, 0, 0.4);
-      }
-    }
-
-    .impact-bar {
-      animation: fadeInUp 0.6s ease-out 0.3s forwards, subtlePulse 4s ease-in-out 2s infinite;
-    }
-
-    /* Fade in animation */
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Hover state - intensify glow */
-    .impact-bar:hover {
-      box-shadow:
-        inset 0 0 20px rgba(214, 30, 46, 0.2),
-        0 0 30px rgba(214, 30, 46, 0.45),
-        0 8px 24px rgba(0, 0, 0, 0.4);
-      border-color: #e63946;
-      transition: all 0.3s ease;
-    }
-
-    /* Metrics Container - Three Columns */
-    .metrics-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 80px;
-      margin-bottom: 24px;
-    }
-
-    /* Individual Metric Column */
-    .metric-column {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    /* Metric Icon */
-    .metric-icon {
-      width: 24px;
-      height: 24px;
-      color: var(--muted);
-      stroke-width: 2;
-    }
-
-    /* Metric Number - The Star */
-    .metric-number {
-      font-size: 42px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: -0.5px;
-      font-variant-numeric: tabular-nums;
-      text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
-      line-height: 1;
-    }
-
-    /* Metric Label */
-    .metric-label {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
-    /* Dividers between columns */
-    .metric-divider {
-      width: 1px;
-      height: 80px;
-      background: rgba(169, 181, 209, 0.2);
-      margin: 0 20px;
-    }
-
-    /* Progress Section */
-    .progress-section {
-      position: relative;
-      padding-top: 4px;
-    }
-
-    .progress-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 11px;
-    }
-
-    .progress-percentage {
-      color: #ffffff;
-      font-weight: 600;
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-    }
-
-    .progress-goal {
-      color: var(--muted);
-    }
-
-    /* Progress Track */
-    .progress-track {
-      height: 8px;
-      width: 100%;
-      background: rgba(169, 181, 209, 0.15);
-      border: 1px solid rgba(169, 181, 209, 0.2);
-      border-radius: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Progress Fill */
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #d61e2e 0%, #e63946 50%, #ff4757 100%);
-      border-radius: 4px;
-      transition: width 0.8s ease-out;
-      box-shadow: 0 0 8px rgba(214, 30, 46, 0.6);
-      animation: progressPulse 2s ease-in-out infinite;
-    }
-
-    /* Progress bar pulse */
-    @keyframes progressPulse {
-      0%, 100% { opacity: 0.9; }
-      50% { opacity: 1; box-shadow: 0 0 12px rgba(214, 30, 46, 0.8); }
-    }
-
-    /* Number update celebration animation */
-    @keyframes numberCelebrate {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); color: #ff4757; }
-      100% { transform: scale(1); }
-    }
-
-    /* Tablet Responsive (600px - 900px) */
-    @media (max-width: 900px) {
-      .impact-bar {
-        padding: 20px;
+      .container{
+        padding:var(--spacing-md) var(--spacing-xs);
       }
 
-      .metric-number {
-        font-size: 36px;
+      .metrics-bar{
+        grid-template-columns:1fr;
+        gap:var(--spacing-sm);
       }
 
-      .metric-label {
-        font-size: 12px;
+      .metric{
+        padding:var(--spacing-xs) 0;
+        border-bottom:1px solid var(--border);
       }
 
-      .metric-icon {
-        width: 20px;
-        height: 20px;
-      }
-
-      .metrics-container {
-        height: 70px;
-      }
-
-      .metric-divider {
-        height: 70px;
-        margin: 0 12px;
-      }
-    }
-
-    /* Mobile Responsive (Below 600px) */
-    @media (max-width: 600px) {
-      .impact-bar {
-        height: auto;
-        padding: 20px;
-      }
-
-      .metrics-container {
-        flex-direction: column;
-        height: auto;
-        gap: 0;
-        margin-bottom: 20px;
-      }
-
-      .metric-column {
-        flex-direction: row;
-        width: 100%;
-        justify-content: space-between;
-        padding: 12px 0;
-        gap: 12px;
-      }
-
-      .metric-icon {
-        order: 1;
-        flex-shrink: 0;
-      }
-
-      .metric-number {
-        order: 2;
-        flex: 1;
-        text-align: center;
-        font-size: 28px;
-      }
-
-      .metric-label {
-        order: 3;
-        text-align: right;
-        flex-shrink: 0;
-        font-size: 11px;
-        max-width: 120px;
-      }
-
-      .metric-divider {
-        width: 100%;
-        height: 1px;
-        margin: 0;
-      }
-
-      .progress-track {
-        height: 10px;
-      }
-
-      .progress-labels {
-        flex-direction: column;
-        gap: 4px;
-        margin-bottom: 8px;
-      }
-
-      .progress-goal {
-        order: 2;
-      }
-    }
-
-    /* Respect reduced motion preferences */
-    @media (prefers-reduced-motion: reduce) {
-      .impact-bar {
-        animation: none;
-        opacity: 1;
-        transform: none;
-      }
-
-      .progress-fill {
-        animation: none;
-      }
-
-      .metric-number {
-        transition: none;
+      .metric:last-child{
+        border-bottom:none;
       }
     }
   </style>
 </head>
-<body style="scroll-behavior:smooth">
-  <!-- Mobile Menu Overlay -->
-  <div class="menu-overlay" onclick="closeMenu()"></div>
-
-  <!-- Enhanced Sticky Header -->
-  <header>
-    <nav class="nav-container">
-      <div class="logo-text">MONTECITO <span>RACING</span></div>
-      <div class="nav-links">
-        <a href="index.html" class="active">Home</a>
-        <a href="our-story.html">Our Story</a>
-        <a href="photo-gallery.html">Gallery</a>
-        <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
-        <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
-        <a href="#charity" class="btn-primary">Donate</a>
-      </div>
-      <div class="menu-button" onclick="toggleMenu()">
+<body>
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <a href="/" class="logo-link">
+        <div class="logo-text">MONTECITO <span>RACING</span></div>
+      </a>
+      <button class="menu-button active" onclick="closeMenu()" aria-label="Close menu">
         <div class="hamburger">
           <span></span>
           <span></span>
           <span></span>
         </div>
-        <span>Menu</span>
+      </button>
+    </div>
+    <nav class="mobile-menu-nav">
+      <a href="/" class="active">Home</a>
+      <a href="/our-story.html">Our Story</a>
+      <a href="/photo-gallery.html">Gallery</a>
+      <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
+      <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
+      <a href="#charity" class="btn-primary">Donate</a>
+    </nav>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="nav-container">
+      <a href="/" class="logo-link">
+        <div class="logo-text">MONTECITO <span>RACING</span></div>
+      </a>
+      <div class="nav-links">
+        <a href="/" class="active">Home</a>
+        <a href="/our-story.html">Our Story</a>
+        <a href="/photo-gallery.html">Gallery</a>
+        <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
+        <a href="#charity" class="btn-primary">Donate</a>
       </div>
+      <button class="menu-button" onclick="toggleMenu()" aria-label="Open menu">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
     </nav>
   </header>
 
+  <!-- MAIN CONTENT -->
   <div class="container">
     <!-- LOGO -->
-    <section class="logo-wrap" aria-label="Team Logo">
-      <!-- Replace with your actual logo file name or hosted URL -->
+    <section class="logo-section">
       <img src="logo2.png" alt="Montecito Racing Logo" onerror="this.style.display='none'">
     </section>
 
-    <!-- ABOUT -->
-    <section class="card">
-      <h1>About</h1>
-      <p class="lead">Montecito Racing was founded in the USA, built to expand racing opportunities for all skill levels and begin a tradition of motorsport dominance. From our drivers to our staff, we strive to instill teamwork, camaraderie, and respect everyday. No matter where we stand, we will race hard. Beyond competition, we use our platform to support cancer research at Cedars-Sinai Medical Center.</p>
-      <a class="btn" href="#schedule">View Schedule</a>
+    <!-- HERO -->
+    <section class="hero">
+      <h1>GT Endurance Sim Racing with Purpose</h1>
+      <p class="lead">Montecito Racing was founded in the USA, built to expand racing opportunities for all skill levels and begin a tradition of motorsport dominance. From our drivers to our staff, we strive to instill teamwork, camaraderie, and respect everyday.</p>
     </section>
 
-    <!-- GT3 IMPACT BAR -->
-    <section class="impact-bar" aria-label="Campaign Impact Statistics" role="region">
-      <div class="metrics-container">
-        <!-- Metric 1: Total Raised -->
-        <div class="metric-column">
-          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-          <div class="metric-number" data-target="500" aria-label="Five hundred dollars raised">$0</div>
-          <div class="metric-label">RAISED FOR RESEARCH</div>
+    <!-- METRICS -->
+    <section class="section-minimal">
+      <div class="metrics-bar">
+        <div class="metric">
+          <div class="metric-number" data-target="500">$0</div>
+          <div class="metric-label">Raised for Research</div>
         </div>
-
-        <!-- Divider -->
-        <div class="metric-divider"></div>
-
-        <!-- Metric 2: Contributors -->
-        <div class="metric-column">
-          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
-          <div class="metric-number" data-target="1" aria-label="One contributor">0</div>
-          <div class="metric-label">CONTRIBUTORS</div>
+        <div class="metric">
+          <div class="metric-number" data-target="1">0</div>
+          <div class="metric-label">Contributors</div>
         </div>
-
-        <!-- Divider -->
-        <div class="metric-divider"></div>
-
-        <!-- Metric 3: Races Completed -->
-        <div class="metric-column">
-          <svg class="metric-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-            <line x1="4" y1="22" x2="4" y2="15"></line>
-          </svg>
-          <div class="metric-number" data-target="1" aria-label="One race completed">0</div>
-          <div class="metric-label">RACES COMPLETED</div>
+        <div class="metric">
+          <div class="metric-number" data-target="1">0</div>
+          <div class="metric-label">Races Completed</div>
         </div>
       </div>
 
-      <!-- Progress Bar Section -->
       <div class="progress-section">
         <div class="progress-labels">
           <span class="progress-percentage">0% funded</span>
           <span class="progress-goal">Goal: $1,000</span>
         </div>
-        <div class="progress-track" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100">
-          <div class="progress-fill" style="width: 0%"></div>
+        <div class="progress-track">
+          <div class="progress-fill" style="width:0%"></div>
         </div>
       </div>
-    </section>
-
-    <!-- BANNER -->
-    <section class="banner" aria-label="Hero Banner">
-      <!-- Replace with your actual banner image file -->
-      <img src="IMG_6212.jpeg" alt="Team Banner" onerror="this.style.display='none'">
     </section>
 
     <!-- CHARITY -->
-    <section class="card" id="charity">
+    <section id="charity" class="section-minimal">
       <h2>Racing for a Cause</h2>
-      <div style="display:flex; flex-wrap:wrap; gap:24px; align-items:center">
-        <div style="flex:0 0 auto">
-          <img src="cslogotransparent.png" alt="Cedars-Sinai Logo" style="max-width:180px; height:auto" onerror="this.style.display='none'">
+      <p class="lead">Montecito Racing exists to use motorsport as a platform for raising awareness and support for cancer research at Cedars-Sinai Medical Center.</p>
+      <p>What began as a virtual simulator racing team now has a clear purpose: connecting medical excellence with the excitement of racing. Founder Andrew McDonald explains: "I grew up in Seattle and spent time in the care of Seattle Children's Hospital. That experience showed me how much a great hospital can shape your health and mindset. When I stumbled upon Cedars-Sinai and their work in cancer research, I see that same standard of care and impact."</p>
+      <p>We're building toward full participation on real tracks, with endurance GT4 racing as our long-term target. Every race, event, and piece of content is an opportunity to highlight Cedars-Sinai's work and invite people to support it.</p>
+      <p><strong>All donations made through this page go directly to Cedars-Sinai Medical Center for cancer research.</strong></p>
+      <a class="btn" href="https://support.cedars-sinai.edu/MontecitoRacing" target="_blank" rel="noopener" style="margin-top:16px">Support Cedars-Sinai</a>
+    </section>
+
+    <!-- SCHEDULE & SPONSORS -->
+    <section class="section-minimal">
+      <div class="grid">
+        <div class="card">
+          <h3>Sponsors</h3>
+          <p>We're currently in-seek of sponsors. Please refer to our email for further questions regarding promotion, placement, and pricing.</p>
         </div>
-        <div style="flex:1; min-width:300px">
-          <p class="lead">Montecito Racing exists to use motorsport as a platform for raising awareness and support for cancer research at Cedars-Sinai Medical Center. What began as a virtual simulator racing team now has a clear purpose: connecting medical excellence with the excitement of racing.</p>
-          <p>Founder Andrew McDonald explains: "I grew up in Seattle and spent time in the care of Seattle Children's Hospital. That experience showed me how much a great hospital can shape your health and mindset. When I stumbled upon Cedars-Sinai and their work in cancer research, I see that same standard of care and impact."</p>
-          <p>We're building toward full participation on real tracks, with endurance GT4 racing as our long-term target. Every race, event, and piece of content is an opportunity to highlight Cedars-Sinai's work and invite people to support it. Our vision is a program where donors, fans, and patients feel connected to what happens on track.</p>
-          <p style="margin-top:18px"><strong>All donations made through this page go directly to Cedars-Sinai Medical Center for cancer research.</strong></p>
-          <a class="btn" href="https://support.cedars-sinai.edu/MontecitoRacing" target="_blank" rel="noopener" style="margin-top:8px; display:inline-block">Support Cedars-Sinai</a>
+        <div class="card">
+          <h3>Next Races</h3>
+          <p style="margin-bottom:8px"><strong>JB vs Andy</strong><br>12 November 2025</p>
+          <p style="margin-bottom:8px"><strong>Race TBD</strong><br>Date TBD</p>
+          <p style="margin-bottom:0"><strong>Race TBD</strong><br>Date TBD</p>
         </div>
       </div>
     </section>
 
-    <!-- SPONSORS / SCHEDULE -->
-    <section class="grid">
-      <div class="card" id="partners">
-        <h2>Sponsors</h2>
-        <p>We're currently in-seek of sponsors. Please refer to our email for further questions regarding promotion, placement, and pricing.</p>
-      </div>
-      <div class="card" id="schedule">
-        <h2>Next Races</h2>
-        <ul class="list">
-          <li><strong>[JB vs Andy]</strong> — [12 November 2025] — [Car/Class]</li>
-          <li><strong>[Race TBD]</strong> — [Date] — [Car/Class]</li>
-          <li><strong>[Race TBD]</strong> — [Date] — [Car/Class]</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ROSTER / ROLES -->
-    <section class="grid">
-      <div class="card">
-        <h2>Roster</h2>
-        <ul class="list">
-          <li><strong>Amateur Simulator Driver:</strong> Jack Berry #2</li>
-          <li><strong>Amateur Simulator Driver:</strong> Andrew McDonald #88</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>Open Roles</h2>
-        <p>For inquiries regarding driver try-outs, engineer, or strategy roles, please refer to a moderator in our Discord server or the email below.</p>
+    <!-- ROSTER & ROLES -->
+    <section class="section-minimal">
+      <div class="grid">
+        <div class="card">
+          <h3>Roster</h3>
+          <p style="margin-bottom:8px"><strong>Amateur Simulator Driver:</strong> Jack Berry #2</p>
+          <p style="margin-bottom:0"><strong>Amateur Simulator Driver:</strong> Andrew McDonald #88</p>
+        </div>
+        <div class="card">
+          <h3>Open Roles</h3>
+          <p style="margin-bottom:0">For inquiries regarding driver try-outs, engineer, or strategy roles, please refer to a moderator in our Discord server or the email below.</p>
+        </div>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="card" id="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:montecitoracing@gmail.com">montecitoracing@gmail.com</a></p>
+    <section class="section-minimal">
+      <h3>Contact</h3>
+      <p>Email: <a href="mailto:montecitoracing@gmail.com" style="color:var(--red)">montecitoracing@gmail.com</a></p>
     </section>
-
-    <footer>© <span id="year"></span> Montecito Racing. All rights reserved.</footer>
   </div>
-  <script>document.getElementById('year').textContent = new Date().getFullYear()</script>
 
-  <!-- Load shared metrics configuration -->
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Montecito Racing. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Load metrics config -->
   <script src="metrics-config.js"></script>
 
   <script>
-    // ==========================================
-    // 📊 IMPACT METRICS - UPDATE IN metrics-config.js
-    // ==========================================
-    // To update your donation stats, edit the metrics-config.js file
-    // All changes there will automatically update here!
-    // ==========================================
-
-    const impactData = METRICS;
-
-    // Counter Animation Function
-    function animateCounter(element, target, duration, delay, prefix = '', suffix = '') {
-      const startTime = Date.now() + delay;
+    // Animate metrics
+    function animateCounter(element, target, duration, prefix = '', suffix = '') {
+      const start = 0;
+      const startTime = Date.now();
 
       function update() {
         const now = Date.now();
         const elapsed = now - startTime;
 
-        if (elapsed < 0) {
-          requestAnimationFrame(update);
-          return;
-        }
-
         if (elapsed < duration) {
           const progress = elapsed / duration;
-          // Ease-out function for smooth deceleration
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          const current = Math.floor(easeOut * target);
-
-          // Format number with commas for dollar amounts
+          const current = Math.floor(progress * target);
           const formatted = prefix === '$' ? current.toLocaleString('en-US') : current;
           element.textContent = prefix + formatted + suffix;
-
           requestAnimationFrame(update);
         } else {
-          // Set final value
           const formatted = prefix === '$' ? target.toLocaleString('en-US') : target;
           element.textContent = prefix + formatted + suffix;
         }
@@ -772,144 +613,71 @@
       requestAnimationFrame(update);
     }
 
-    // Initialize Impact Bar on Page Load
-    function initImpactBar() {
+    // Initialize metrics
+    function initMetrics() {
       const metricNumbers = document.querySelectorAll('.metric-number');
       const progressFill = document.querySelector('.progress-fill');
       const progressPercentage = document.querySelector('.progress-percentage');
-      const progressBar = document.querySelector('.progress-track');
 
-      // Update data-target attributes from METRICS config
-      metricNumbers[0].setAttribute('data-target', impactData.totalRaised);
-      metricNumbers[1].setAttribute('data-target', impactData.contributors);
-      metricNumbers[2].setAttribute('data-target', impactData.racesCompleted);
+      // Update from config
+      metricNumbers[0].setAttribute('data-target', METRICS.totalRaised);
+      metricNumbers[1].setAttribute('data-target', METRICS.contributors);
+      metricNumbers[2].setAttribute('data-target', METRICS.racesCompleted);
 
-      // Update goal text
-      document.querySelector('.progress-goal').textContent = 'Goal: $' + impactData.goalAmount.toLocaleString('en-US');
+      const percentage = Math.min((METRICS.totalRaised / METRICS.goalAmount) * 100, 100);
 
-      // Calculate progress percentage
-      const percentage = Math.min((impactData.totalRaised / impactData.goalAmount) * 100, 100);
-
-      // Animate each metric with stagger
-      metricNumbers.forEach((numberElement, index) => {
-        const target = parseInt(numberElement.getAttribute('data-target'));
-        const delay = index * 150; // 0.15s stagger between each column
-        const duration = 1500; // 1.5s animation
-
-        // Determine prefix based on content
-        const prefix = index === 0 ? '$' : '';
-
-        animateCounter(numberElement, target, duration, delay, prefix);
+      // Animate
+      metricNumbers.forEach((el, i) => {
+        const target = parseInt(el.getAttribute('data-target'));
+        const prefix = i === 0 ? '$' : '';
+        animateCounter(el, target, 1500, prefix);
       });
 
-      // Animate progress bar
       setTimeout(() => {
         progressFill.style.width = percentage.toFixed(1) + '%';
         progressPercentage.textContent = Math.round(percentage) + '% funded';
-        progressBar.setAttribute('aria-valuenow', Math.round(percentage));
       }, 300);
     }
 
-    // Run on DOM ready
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initImpactBar);
+      document.addEventListener('DOMContentLoaded', initMetrics);
     } else {
-      initImpactBar();
+      initMetrics();
     }
-
-    // Function to update metrics (for future use when donations come in)
-    function updateImpactMetrics(newData) {
-      // Update the data object
-      Object.assign(impactData, newData);
-
-      // Re-animate the affected metrics
-      const metricNumbers = document.querySelectorAll('.metric-number');
-      const progressFill = document.querySelector('.progress-fill');
-      const progressPercentage = document.querySelector('.progress-percentage');
-      const progressBar = document.querySelector('.progress-track');
-
-      // Update each metric if data changed
-      if (newData.totalRaised !== undefined) {
-        const element = metricNumbers[0];
-        element.style.animation = 'numberCelebrate 0.5s ease-out';
-        setTimeout(() => {
-          element.style.animation = '';
-          element.textContent = '$' + impactData.totalRaised.toLocaleString('en-US');
-        }, 500);
-      }
-
-      if (newData.contributors !== undefined) {
-        const element = metricNumbers[1];
-        element.style.animation = 'numberCelebrate 0.5s ease-out';
-        setTimeout(() => {
-          element.style.animation = '';
-          element.textContent = impactData.contributors;
-        }, 500);
-      }
-
-      if (newData.racesCompleted !== undefined) {
-        const element = metricNumbers[2];
-        element.style.animation = 'numberCelebrate 0.5s ease-out';
-        setTimeout(() => {
-          element.style.animation = '';
-          element.textContent = impactData.racesCompleted;
-        }, 500);
-      }
-
-      // Update progress bar
-      const percentage = Math.min((impactData.totalRaised / impactData.goalAmount) * 100, 100);
-      progressFill.style.width = percentage.toFixed(1) + '%';
-      progressPercentage.textContent = Math.round(percentage) + '% funded';
-      progressBar.setAttribute('aria-valuenow', Math.round(percentage));
-    }
-
-    // Example: To manually update metrics, call:
-    // updateImpactMetrics({ totalRaised: 3000, contributors: 25 });
   </script>
 
-  <!-- Enhanced Navigation Script -->
+  <!-- Navigation Script -->
   <script>
     function toggleMenu() {
-      const menuButton = document.querySelector('.menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      const overlay = document.querySelector('.menu-overlay');
-
-      const isActive = navLinks.classList.contains('active');
-
-      if (isActive) {
-        closeMenu();
-      } else {
-        menuButton.classList.add('active');
-        navLinks.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+      const menu = document.getElementById('mobileMenu');
+      const button = document.querySelector('header .menu-button');
+      menu.classList.add('active');
+      button.classList.add('active');
+      document.body.classList.add('nav-open');
     }
 
     function closeMenu() {
-      const menuButton = document.querySelector('.menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      const overlay = document.querySelector('.menu-overlay');
-
-      menuButton.classList.remove('active');
-      navLinks.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
+      const menu = document.getElementById('mobileMenu');
+      const button = document.querySelector('header .menu-button');
+      menu.classList.remove('active');
+      button.classList.remove('active');
+      document.body.classList.remove('nav-open');
     }
 
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    // Close menu on escape key
+    // Close on escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks.classList.contains('active')) {
+        closeMenu();
+      }
+    });
+
+    // Close when clicking a link in mobile menu
+    document.querySelectorAll('.mobile-menu-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (!link.href.startsWith('http')) {
           closeMenu();
         }
-      }
+      });
     });
   </script>
 </body>

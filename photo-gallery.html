@@ -6,483 +6,342 @@
   <title>Photo Gallery — Montecito Racing</title>
   <style>
     :root{
-      --navy:#0a1224;
-      --navy-2:#0e1a33;
+      --navy:#0a0a0f;
+      --navy-light:#16161f;
       --red:#d61e2e;
-      --red-hover:#ff4757;
-      --text:#f2f6ff;
-      --muted:#a9b5d1;
-      --border:#1d2a4a;
+      --red-hover:#e63946;
+      --text:#ffffff;
+      --text-secondary:#94a3b8;
+      --border:rgba(148, 163, 184, 0.12);
+      --spacing-xs:16px;
+      --spacing-sm:24px;
+      --spacing-md:32px;
+      --spacing-lg:48px;
+      --spacing-xl:64px;
+      --radius:6px;
     }
+
     *{box-sizing:border-box; margin:0; padding:0}
-    html,body{min-height:100%}
+
+    html{scroll-behavior:smooth}
+
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
-      background:linear-gradient(180deg,var(--navy),#0b152e 60%,#0a142b);
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+      background:var(--navy);
       color:var(--text);
       line-height:1.6;
+      font-size:17px;
     }
-    a{color:var(--text); text-decoration:none; transition:all 0.3s ease}
-    .container{max-width:1200px; margin:0 auto; padding:20px}
 
-    /* ===== ENHANCED MODERN HEADER ===== */
+    body.nav-open{overflow:hidden}
+
+    a{color:inherit; text-decoration:none; transition:opacity 0.2s ease}
+    a:hover{opacity:0.8}
+
+    /* MODERN HEADER */
     header{
       position:sticky;
       top:0;
-      z-index:1000;
-      background:rgba(10, 18, 36, 0.85);
-      backdrop-filter:saturate(180%) blur(24px);
-      -webkit-backdrop-filter:saturate(180%) blur(24px);
-      border-bottom:2px solid rgba(214, 30, 46, 0.3);
-      box-shadow:0 4px 20px rgba(0, 0, 0, 0.3);
-      transition:all 0.3s ease;
+      z-index:100;
+      background:rgba(10, 10, 15, 0.8);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
     }
-    header:hover{
-      border-bottom-color:rgba(214, 30, 46, 0.5);
-    }
+
     .nav-container{
       max-width:1280px;
       margin:0 auto;
-      padding:16px 28px;
+      padding:20px var(--spacing-sm);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:20px;
     }
+
+    .logo-link{
+      display:inline-flex;
+      align-items:center;
+      cursor:pointer;
+    }
+
     .logo-text{
-      font-size:20px;
-      font-weight:700;
+      font-size:18px;
+      font-weight:600;
       color:var(--text);
-      letter-spacing:-0.5px;
-      white-space:nowrap;
-      text-shadow:0 2px 8px rgba(214, 30, 46, 0.4);
-      transition:all 0.3s ease;
+      letter-spacing:-0.02em;
     }
-    .logo-text:hover{
-      text-shadow:0 2px 12px rgba(214, 30, 46, 0.6);
-      transform:translateY(-1px);
-    }
+
     .logo-text span{
       color:var(--red);
+      margin-left:4px;
     }
 
-    /* Desktop Navigation */
+    /* Desktop Nav */
     .nav-links{
-      display:flex;
-      gap:6px;
+      display:none;
+      gap:4px;
       align-items:center;
     }
-    .nav-links a{
-      padding:10px 16px;
-      border-radius:10px;
-      font-weight:500;
-      font-size:15px;
-      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      white-space:nowrap;
-      position:relative;
-      border:1px solid transparent;
-    }
-    .nav-links a:not(.btn-primary):hover{
-      background:rgba(255, 255, 255, 0.1);
-      border-color:rgba(255, 255, 255, 0.1);
-      transform:translateY(-2px);
-    }
-    .nav-links a.active:not(.btn-primary){
-      color:var(--text);
-      background:rgba(214, 30, 46, 0.15);
-      border-color:rgba(214, 30, 46, 0.3);
-    }
-    .nav-links a.active:not(.btn-primary)::after{
-      content:'';
-      position:absolute;
-      bottom:0;
-      left:16px;
-      right:16px;
-      height:3px;
-      background:linear-gradient(90deg, var(--red), var(--red-hover));
-      border-radius:3px;
-      box-shadow:0 0 8px rgba(214, 30, 46, 0.6);
-    }
-    .btn-primary{
-      background:linear-gradient(135deg, var(--red), #e63946);
-      color:#fff !important;
-      font-weight:600;
-      padding:10px 20px;
-      box-shadow:0 4px 12px rgba(214, 30, 46, 0.4);
-      border:1px solid rgba(255, 255, 255, 0.1);
-    }
-    .btn-primary:hover{
-      background:linear-gradient(135deg, var(--red-hover), #ff5865);
-      transform:translateY(-2px);
-      box-shadow:0 6px 16px rgba(214, 30, 46, 0.6);
+
+    @media (min-width:769px){
+      .nav-links{display:flex}
     }
 
-    /* Mobile Menu Overlay Backdrop */
-    .menu-overlay{
+    .nav-links a{
+      padding:8px 14px;
+      border-radius:var(--radius);
+      font-weight:500;
+      font-size:15px;
+      white-space:nowrap;
+    }
+
+    .nav-links a:not(.btn-primary):hover{
+      background:rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-links a.active:not(.btn-primary){
+      color:var(--text);
+    }
+
+    .btn-primary{
+      background:var(--red);
+      color:#fff;
+      font-weight:600;
+      padding:8px 16px;
+      border-radius:var(--radius);
+    }
+
+    .btn-primary:hover{
+      background:var(--red-hover);
+      opacity:1;
+    }
+
+    /* Mobile Menu Button */
+    .menu-button{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      color:var(--text);
+      font-size:15px;
+      font-weight:500;
+    }
+
+    @media (min-width:769px){
+      .menu-button{display:none}
+    }
+
+    .hamburger{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      width:20px;
+    }
+
+    .hamburger span{
+      width:100%;
+      height:2px;
+      background:var(--text);
+      border-radius:2px;
+      transition:all 0.3s ease;
+    }
+
+    .menu-button.active .hamburger span:nth-child(1){
+      transform:rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-button.active .hamburger span:nth-child(2){
+      opacity:0;
+    }
+
+    .menu-button.active .hamburger span:nth-child(3){
+      transform:rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* FULL-SCREEN MOBILE OVERLAY */
+    .mobile-menu-overlay{
       position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      bottom:0;
-      background:rgba(0, 0, 0, 0.85);
-      backdrop-filter:blur(4px);
-      -webkit-backdrop-filter:blur(4px);
+      inset:0;
+      padding:var(--spacing-sm);
+      display:flex;
+      flex-direction:column;
+      gap:var(--spacing-sm);
+      background:rgba(10, 10, 15, 0.98);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      color:#fff;
+      z-index:200;
       opacity:0;
       pointer-events:none;
       transition:opacity 0.3s ease;
-      z-index:999;
     }
-    .menu-overlay.active{
+
+    .mobile-menu-overlay.active{
       opacity:1;
       pointer-events:all;
     }
 
-    /* Hamburger Button */
-    .menu-button{
-      display:none;
+    .mobile-menu-header{
+      display:flex;
       align-items:center;
-      gap:10px;
-      padding:10px 16px;
-      background:rgba(214, 30, 46, 0.15);
-      border:1px solid rgba(214, 30, 46, 0.3);
-      border-radius:10px;
-      cursor:pointer;
-      transition:all 0.3s ease;
-      font-size:14px;
-      font-weight:600;
-      color:var(--text);
-      box-shadow:0 2px 8px rgba(214, 30, 46, 0.2);
+      justify-content:space-between;
+      padding-bottom:var(--spacing-sm);
+      border-bottom:1px solid var(--border);
     }
-    .menu-button:hover{
-      background:rgba(214, 30, 46, 0.25);
-      border-color:rgba(214, 30, 46, 0.5);
-      transform:translateY(-2px);
-      box-shadow:0 4px 12px rgba(214, 30, 46, 0.4);
-    }
-    .menu-button.active{
-      background:rgba(214, 30, 46, 0.3);
-      border-color:rgba(214, 30, 46, 0.6);
-    }
-    .hamburger{
+
+    .mobile-menu-nav{
       display:flex;
       flex-direction:column;
-      gap:5px;
-      width:20px;
-    }
-    .hamburger span{
-      width:100%;
-      height:2.5px;
-      background:var(--text);
-      border-radius:3px;
-      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow:0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-    .menu-button.active .hamburger span:nth-child(1){
-      transform:rotate(45deg) translate(7px, 7px);
-    }
-    .menu-button.active .hamburger span:nth-child(2){
-      opacity:0;
-      transform:translateX(-10px);
-    }
-    .menu-button.active .hamburger span:nth-child(3){
-      transform:rotate(-45deg) translate(7px, -7px);
+      gap:4px;
+      padding-top:var(--spacing-sm);
     }
 
-    /* Mobile Menu - Slide-in Sidebar */
-    @media (max-width:768px){
-      .nav-links{
-        position:fixed;
-        top:0;
-        right:0;
-        bottom:0;
-        width:85%;
-        max-width:320px;
-        background:linear-gradient(180deg, rgb(14, 26, 51), rgb(10, 18, 36));
-        backdrop-filter:blur(0px);
-        -webkit-backdrop-filter:blur(0px);
-        border-left:2px solid rgba(214, 30, 46, 0.8);
-        box-shadow:-4px 0 24px rgba(0, 0, 0, 0.8);
-        flex-direction:column;
-        justify-content:flex-start;
-        align-items:stretch;
-        gap:4px;
-        padding:80px 20px 32px;
-        transform:translateX(100%);
-        transition:transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index:1000;
-        overflow-y:auto;
-      }
-      .nav-links.active{
-        transform:translateX(0);
-      }
-      .nav-links a{
-        font-size:16px;
-        padding:16px 20px;
-        width:100%;
-        text-align:left;
-        border-radius:10px;
-        border:1px solid transparent;
-      }
-      .nav-links a:not(.btn-primary):hover{
-        background:rgba(255, 255, 255, 0.1);
-        border-color:rgba(255, 255, 255, 0.15);
-      }
-      .nav-links a.active:not(.btn-primary){
-        background:rgba(214, 30, 46, 0.2);
-        border-color:rgba(214, 30, 46, 0.4);
-      }
-      .nav-links a.active:not(.btn-primary)::after{
-        left:0;
-        right:auto;
-        width:4px;
-        height:100%;
-        top:0;
-        bottom:0;
-        border-radius:0 3px 3px 0;
-      }
-      .btn-primary{
-        margin-top:16px;
-        padding:16px 24px;
-        font-size:16px;
-        text-align:center;
-      }
-      .menu-button{
-        display:flex;
-      }
+    .mobile-menu-nav a{
+      padding:16px;
+      border-radius:var(--radius);
+      font-size:18px;
+      font-weight:500;
     }
 
-    /* Logo */
-    .logo-wrap{
-      display:flex; align-items:center; justify-content:center;
-      padding:28px; border:1px solid var(--border); border-radius:16px;
-      background:linear-gradient(180deg,var(--navy-2),#0b162f);
-      min-height:180px; margin-bottom:24px;
+    .mobile-menu-nav a:hover{
+      background:rgba(255, 255, 255, 0.08);
+      opacity:1;
     }
-    .logo-wrap img{max-height:clamp(120px, 18vw, 220px); width:auto; object-fit:contain}
 
-    /* Typography */
+    .mobile-menu-nav a.active{
+      background:rgba(214, 30, 46, 0.15);
+    }
+
+    /* CONTAINER */
+    .container{
+      max-width:1280px;
+      margin:0 auto;
+      padding:var(--spacing-lg) var(--spacing-sm);
+    }
+
+    /* TYPOGRAPHY */
     h1{
-      font-size:clamp(32px,5vw,52px);
-      margin:0 0 16px;
-      background:linear-gradient(135deg, #ffffff 0%, #a9b5d1 100%);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
-      line-height:1.2;
-      text-align:center;
-    }
-
-    .subtitle{
-      text-align:center;
-      font-size:clamp(16px,2.5vw,20px);
-      color:var(--muted);
-      margin-bottom:48px;
-    }
-
-    /* Gallery Categories */
-    .category-nav{
-      display:flex;
-      gap:12px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin:32px 0;
-      padding:20px;
-      background:linear-gradient(180deg,var(--navy-2),#0b162f);
-      border:1px solid var(--border);
-      border-radius:16px;
-    }
-
-    .category-btn{
-      padding:10px 20px;
-      background:transparent;
-      border:1px solid var(--border);
-      color:var(--text);
-      border-radius:8px;
-      cursor:pointer;
+      font-size:clamp(36px, 5vw, 56px);
       font-weight:600;
-      font-size:14px;
-      transition:all 0.2s;
+      line-height:1.1;
+      letter-spacing:-0.02em;
+      margin-bottom:var(--spacing-sm);
     }
 
-    .category-btn:hover, .category-btn.active{
-      background:var(--red);
-      border-color:var(--red);
-      color:#fff;
+    h2{
+      font-size:clamp(28px, 4vw, 40px);
+      font-weight:600;
+      line-height:1.2;
+      letter-spacing:-0.02em;
+      margin-bottom:var(--spacing-xs);
     }
 
-    /* Photo Grid */
+    p{
+      color:var(--text-secondary);
+      margin-bottom:16px;
+      max-width:70ch;
+    }
+
+    p.lead{
+      font-size:20px;
+      line-height:1.6;
+      color:var(--text);
+    }
+
+    /* LOGO */
+    .logo-section{
+      text-align:center;
+      padding:var(--spacing-xl) 0;
+    }
+
+    .logo-section img{
+      max-width:300px;
+      height:auto;
+      opacity:0.95;
+    }
+
+    /* HERO */
+    .hero{
+      text-align:center;
+      padding:var(--spacing-xl) 0;
+      border-bottom:1px solid var(--border);
+    }
+
+    .hero h1{
+      max-width:20ch;
+      margin:0 auto var(--spacing-sm);
+    }
+
+    .hero p{
+      margin:0 auto var(--spacing-md);
+      max-width:60ch;
+    }
+
+    /* GALLERY */
     .gallery-grid{
       display:grid;
       grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
-      gap:20px;
-      margin:40px 0;
+      gap:var(--spacing-sm);
+      margin-top:var(--spacing-lg);
     }
 
     .gallery-item{
       position:relative;
-      border-radius:12px;
+      aspect-ratio:4/3;
       overflow:hidden;
+      border-radius:var(--radius);
+      background:rgba(255, 255, 255, 0.02);
       border:1px solid var(--border);
-      background:var(--navy-2);
-      transition:transform 0.3s ease, box-shadow 0.3s ease;
       cursor:pointer;
+      transition:all 0.3s ease;
     }
 
     .gallery-item:hover{
-      transform:translateY(-5px);
-      box-shadow:
-        0 0 20px rgba(214, 30, 46, 0.3),
-        0 10px 30px rgba(0, 0, 0, 0.5);
-      border-color:var(--red);
+      border-color:rgba(148, 163, 184, 0.3);
+      transform:scale(1.02);
     }
 
     .gallery-item img{
       width:100%;
-      height:280px;
-      object-fit:cover;
-      display:block;
-    }
-
-    .gallery-caption{
-      padding:16px;
-      background:linear-gradient(180deg, rgba(14, 26, 51, 0.95), rgba(10, 18, 36, 1));
-    }
-
-    .gallery-title{
-      font-weight:700;
-      font-size:16px;
-      margin:0 0 6px;
-      color:#fff;
-    }
-
-    .gallery-meta{
-      font-size:13px;
-      color:var(--muted);
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
-
-    .gallery-tag{
-      display:inline-block;
-      padding:4px 10px;
-      background:rgba(214, 30, 46, 0.15);
-      border:1px solid rgba(214, 30, 46, 0.3);
-      border-radius:6px;
-      font-size:11px;
-      color:var(--red);
-      font-weight:600;
-      text-transform:uppercase;
-      letter-spacing:0.5px;
-    }
-
-    /* Placeholder for empty gallery */
-    .gallery-placeholder{
-      text-align:center;
-      padding:80px 20px;
-      background:linear-gradient(180deg,var(--navy-2),#0b162f);
-      border:2px dashed var(--border);
-      border-radius:16px;
-      margin:40px 0;
-    }
-
-    .placeholder-icon{
-      font-size:64px;
-      margin-bottom:20px;
-      opacity:0.5;
-    }
-
-    .placeholder-text{
-      color:var(--muted);
-      font-size:18px;
-      margin-bottom:24px;
-    }
-
-    /* Lightbox Modal */
-    .lightbox{
-      display:none;
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
       height:100%;
-      background:rgba(10, 18, 36, 0.95);
-      z-index:1000;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
+      object-fit:cover;
+      transition:transform 0.3s ease;
     }
 
-    .lightbox.active{
-      display:flex;
+    .gallery-item:hover img{
+      transform:scale(1.05);
     }
 
-    .lightbox-content{
-      max-width:90%;
-      max-height:90%;
-      position:relative;
+    .empty-state{
+      text-align:center;
+      padding:var(--spacing-xl) var(--spacing-sm);
+      color:var(--text-secondary);
     }
 
-    .lightbox-content img{
-      max-width:100%;
-      max-height:90vh;
-      border-radius:12px;
-      box-shadow:0 0 50px rgba(0, 0, 0, 0.8);
+    /* FOOTER */
+    footer{
+      padding:var(--spacing-lg) 0;
+      text-align:center;
+      color:var(--text-secondary);
+      font-size:14px;
+      border-top:1px solid var(--border);
+      margin-top:var(--spacing-xl);
     }
 
-    .lightbox-close{
-      position:absolute;
-      top:-40px;
-      right:0;
-      background:var(--red);
-      color:#fff;
-      border:none;
-      width:40px;
-      height:40px;
-      border-radius:50%;
-      font-size:24px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .lightbox-close:hover{
-      opacity:0.8;
-    }
-
-    /* Section Headers */
-    .section-header{
-      margin:48px 0 24px;
-      padding-bottom:12px;
-      border-bottom:2px solid var(--border);
-    }
-
-    .section-header h2{
-      font-size:clamp(24px, 4vw, 32px);
-      margin:0;
-      color:#fff;
-    }
-
-    footer{margin:48px 0 28px; text-align:center; color:var(--muted); font-size:14px}
-
+    /* RESPONSIVE */
     @media (max-width:768px){
+      .container{
+        padding:var(--spacing-md) var(--spacing-xs);
+      }
+
       .gallery-grid{
         grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));
-        gap:16px;
+        gap:var(--spacing-xs);
       }
-      .gallery-item img{
-        height:220px;
-      }
-    }
-
-    @media (max-width:600px){
-      .logo-wrap{padding:20px; min-height:140px}
-      .logo-wrap img{max-height:140px}
-      .container{padding:16px}
-      h1{font-size:28px}
-      .subtitle{font-size:15px}
     }
 
     @media (max-width:480px){
@@ -493,227 +352,155 @@
   </style>
 </head>
 <body>
-  <!-- Mobile Menu Overlay -->
-  <div class="menu-overlay" onclick="closeMenu()"></div>
-
-  <!-- Enhanced Sticky Header -->
-  <header>
-    <nav class="nav-container">
-      <div class="logo-text">MONTECITO <span>RACING</span></div>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="our-story.html">Our Story</a>
-        <a href="photo-gallery.html" class="active">Gallery</a>
-        <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
-        <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
-        <a href="index.html#charity" class="btn-primary">Donate</a>
-      </div>
-      <div class="menu-button" onclick="toggleMenu()">
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <a href="/" class="logo-link">
+        <div class="logo-text">MONTECITO <span>RACING</span></div>
+      </a>
+      <button class="menu-button active" onclick="closeMenu()" aria-label="Close menu">
         <div class="hamburger">
           <span></span>
           <span></span>
           <span></span>
         </div>
-        <span>Menu</span>
+      </button>
+    </div>
+    <nav class="mobile-menu-nav">
+      <a href="/">Home</a>
+      <a href="/our-story.html">Our Story</a>
+      <a href="/photo-gallery.html" class="active">Gallery</a>
+      <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
+      <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
+      <a href="/#charity" class="btn-primary">Donate</a>
+    </nav>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="nav-container">
+      <a href="/" class="logo-link">
+        <div class="logo-text">MONTECITO <span>RACING</span></div>
+      </a>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/our-story.html">Our Story</a>
+        <a href="/photo-gallery.html" class="active">Gallery</a>
+        <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
+        <a href="/#charity" class="btn-primary">Donate</a>
       </div>
+      <button class="menu-button" onclick="toggleMenu()" aria-label="Open menu">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
     </nav>
   </header>
 
+  <!-- MAIN CONTENT -->
   <div class="container">
-    <!-- Logo -->
-    <section class="logo-wrap" aria-label="Team Logo">
+    <!-- LOGO -->
+    <section class="logo-section">
       <img src="logo2.png" alt="Montecito Racing Logo" onerror="this.style.display='none'">
     </section>
 
-    <!-- Header -->
-    <h1>Photo Gallery</h1>
-    <p class="subtitle">Moments from the track, the garage, and our mission</p>
+    <!-- HERO -->
+    <section class="hero">
+      <h1>Photo Gallery</h1>
+      <p class="lead">A visual journey through our races, team moments, and pursuit of excellence</p>
+    </section>
 
-    <!-- Category Navigation -->
-    <div class="category-nav">
-      <button class="category-btn active" data-category="all">All Photos</button>
-      <button class="category-btn" data-category="racing">Racing</button>
-      <button class="category-btn" data-category="team">Team</button>
-      <button class="category-btn" data-category="events">Events</button>
-      <button class="category-btn" data-category="charity">Charity</button>
+    <!-- GALLERY -->
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Photos will be loaded here by JavaScript -->
     </div>
 
-    <!-- Photo Gallery Grid (automatically populated from gallery-photos.js) -->
-    <div class="gallery-grid" id="gallery-container">
-      <!-- Photos will load here automatically from gallery-photos.js -->
-    </div>
-
-    <!-- Upload Info -->
-    <div class="gallery-placeholder">
-      <div class="placeholder-icon">📷</div>
-      <div class="placeholder-text">More photos coming soon as we compete and grow!</div>
-      <p style="color:var(--muted); font-size:14px; margin-top:16px">Follow us on TikTok and Discord for the latest updates and behind-the-scenes content</p>
-      <div style="display:flex; gap:12px; justify-content:center; margin-top:24px">
-        <a class="btn alt" href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
-        <a class="btn alt" href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
-      </div>
-    </div>
-
-    <footer>© <span id="year"></span> Montecito Racing. All rights reserved.</footer>
-  </div>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-content">
-      <button class="lightbox-close" onclick="closeLightbox()">×</button>
-      <img id="lightbox-img" src="" alt="">
+    <div class="empty-state" id="emptyState" style="display:none">
+      <p>No photos available at the moment. Check back soon!</p>
     </div>
   </div>
 
-  <!-- Load photo gallery configuration -->
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Montecito Racing. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Load gallery photos -->
   <script src="gallery-photos.js"></script>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Load gallery photos
+    function loadGallery() {
+      const grid = document.getElementById('galleryGrid');
+      const emptyState = document.getElementById('emptyState');
 
-    // ==========================================
-    // PHOTO GALLERY - AUTO-LOADS FROM gallery-photos.js
-    // ==========================================
+      if (typeof galleryPhotos === 'undefined' || galleryPhotos.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        return;
+      }
 
-    // Build gallery from configuration
-    function buildGallery() {
-      const container = document.getElementById('gallery-container');
-      container.innerHTML = ''; // Clear any existing content
+      galleryPhotos.forEach(photo => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
 
-      GALLERY_PHOTOS.forEach(photo => {
-        const galleryItem = document.createElement('div');
-        galleryItem.className = 'gallery-item';
-        galleryItem.setAttribute('data-category', photo.category);
+        const img = document.createElement('img');
+        img.src = photo.src;
+        img.alt = photo.caption || 'Gallery photo';
+        img.loading = 'lazy';
+        img.onerror = function() {
+          item.style.display = 'none';
+        };
 
-        galleryItem.innerHTML = `
-          <img src="${photo.image}" alt="${photo.title}" onerror="this.parentElement.style.display='none'">
-          <div class="gallery-caption">
-            <div class="gallery-title">${photo.title}</div>
-            <div class="gallery-meta">
-              <span class="gallery-tag">${photo.category}</span>
-              <span>${photo.date}</span>
-            </div>
-          </div>
-        `;
-
-        // Add click handler for lightbox
-        galleryItem.addEventListener('click', () => {
-          const img = galleryItem.querySelector('img');
-          if (img && img.src && !img.src.includes('onerror')) {
-            document.getElementById('lightbox-img').src = img.src;
-            document.getElementById('lightbox').classList.add('active');
-          }
-        });
-
-        container.appendChild(galleryItem);
+        item.appendChild(img);
+        grid.appendChild(item);
       });
-
-      // Show placeholder if no photos
-      const placeholder = document.querySelector('.gallery-placeholder');
-      if (GALLERY_PHOTOS.length === 0) {
-        placeholder.style.display = 'block';
-      } else {
-        placeholder.style.display = 'none';
-      }
     }
 
-    // Build gallery on page load
-    buildGallery();
-
-    // Category filtering
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    let galleryItems; // Will be populated after gallery is built
-
-    function updateGalleryItems() {
-      galleryItems = document.querySelectorAll('.gallery-item');
-    }
-
-    updateGalleryItems(); // Initial update
-
-    categoryBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Update active button
-        categoryBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        const category = btn.dataset.category;
-
-        // Update gallery items list
-        updateGalleryItems();
-
-        // Filter gallery items
-        galleryItems.forEach(item => {
-          if (category === 'all' || item.dataset.category === category) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
-      });
-    });
-
-    function closeLightbox() {
-      document.getElementById('lightbox').classList.remove('active');
-    }
-
-    // Close lightbox on background click
-    document.getElementById('lightbox').addEventListener('click', (e) => {
-      if (e.target.id === 'lightbox') {
-        closeLightbox();
-      }
-    });
-
-    // Close lightbox on ESC key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeLightbox();
-      }
-    });
+    loadGallery();
   </script>
 
-  <!-- Enhanced Navigation Script -->
+  <!-- Navigation Script -->
   <script>
     function toggleMenu() {
-      const menuButton = document.querySelector('.menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      const overlay = document.querySelector('.menu-overlay');
-
-      const isActive = navLinks.classList.contains('active');
-
-      if (isActive) {
-        closeMenu();
-      } else {
-        menuButton.classList.add('active');
-        navLinks.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+      const menu = document.getElementById('mobileMenu');
+      const button = document.querySelector('header .menu-button');
+      menu.classList.add('active');
+      button.classList.add('active');
+      document.body.classList.add('nav-open');
     }
 
     function closeMenu() {
-      const menuButton = document.querySelector('.menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      const overlay = document.querySelector('.menu-overlay');
-
-      menuButton.classList.remove('active');
-      navLinks.classList.remove('active');
-      overlay.classList.remove('active');
-      document.body.style.overflow = '';
+      const menu = document.getElementById('mobileMenu');
+      const button = document.querySelector('header .menu-button');
+      menu.classList.remove('active');
+      button.classList.remove('active');
+      document.body.classList.remove('nav-open');
     }
 
-    // Close menu when clicking a link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    // Close menu on escape key
+    // Close on escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks.classList.contains('active')) {
+        closeMenu();
+      }
+    });
+
+    // Close when clicking a link in mobile menu
+    document.querySelectorAll('.mobile-menu-nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (!link.href.startsWith('http')) {
           closeMenu();
         }
-      }
+      });
     });
   </script>
 </body>
