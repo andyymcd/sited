@@ -26,117 +26,162 @@
     a{color:var(--text); text-decoration:none; transition:all 0.3s ease}
     .container{max-width:1200px; margin:0 auto; padding:20px}
 
-    /* ===== MODERN STICKY HEADER ===== */
+    /* ===== MODERN HEADER (Anthropic-style) ===== */
     header{
       position:sticky;
       top:0;
       z-index:1000;
-      background:rgba(10, 18, 36, 0.85);
-      backdrop-filter:blur(10px);
-      -webkit-backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(29, 42, 74, 0.5);
-      box-shadow:0 4px 30px rgba(0, 0, 0, 0.1);
+      background:rgba(10, 18, 36, 0.8);
+      backdrop-filter:saturate(180%) blur(20px);
+      -webkit-backdrop-filter:saturate(180%) blur(20px);
+      border-bottom:1px solid rgba(255, 255, 255, 0.06);
       transition:all 0.3s ease;
     }
     .nav-container{
-      max-width:1240px;
+      max-width:1280px;
       margin:0 auto;
-      padding:16px 20px;
+      padding:14px 24px;
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:20px;
     }
     .logo-text{
-      font-size:20px;
-      font-weight:700;
+      font-size:18px;
+      font-weight:600;
       color:var(--text);
-      letter-spacing:-0.5px;
+      letter-spacing:-0.3px;
+      white-space:nowrap;
     }
     .logo-text span{
       color:var(--red);
     }
     .nav-links{
       display:flex;
-      gap:8px;
+      gap:4px;
       align-items:center;
     }
     .nav-links a{
-      padding:10px 18px;
-      border-radius:12px;
-      font-weight:600;
+      padding:8px 14px;
+      border-radius:8px;
+      font-weight:500;
       font-size:14px;
-      border:1.5px solid transparent;
-      transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition:all 0.2s ease;
+      white-space:nowrap;
+      position:relative;
     }
     .nav-links a:not(.btn-primary):hover{
-      background:rgba(255, 255, 255, 0.05);
-      border-color:rgba(169, 181, 209, 0.2);
-      transform:translateY(-2px);
+      background:rgba(255, 255, 255, 0.08);
     }
-    .nav-links a.active{
-      background:rgba(214, 30, 46, 0.15);
-      border-color:rgba(214, 30, 46, 0.3);
-      color:var(--red-hover);
+    .nav-links a.active:not(.btn-primary){
+      color:var(--text);
+      background:rgba(255, 255, 255, 0.1);
+    }
+    .nav-links a.active:not(.btn-primary)::after{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:14px;
+      right:14px;
+      height:2px;
+      background:var(--red);
+      border-radius:2px;
     }
     .btn-primary{
-      background:linear-gradient(135deg, var(--red) 0%, #c51828 100%);
+      background:var(--red);
       color:#fff !important;
-      box-shadow:0 4px 15px rgba(214, 30, 46, 0.3);
+      font-weight:600;
+      padding:8px 16px;
     }
     .btn-primary:hover{
-      transform:translateY(-2px);
-      box-shadow:0 6px 20px rgba(214, 30, 46, 0.4);
-      background:linear-gradient(135deg, var(--red-hover) 0%, var(--red) 100%);
+      background:var(--red-hover);
+      transform:translateY(-1px);
+    }
+    .menu-button{
+      display:none;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      background:rgba(255, 255, 255, 0.05);
+      border:1px solid rgba(255, 255, 255, 0.1);
+      border-radius:8px;
+      cursor:pointer;
+      transition:all 0.2s ease;
+      font-size:14px;
+      font-weight:500;
+      color:var(--text);
+    }
+    .menu-button:hover{
+      background:rgba(255, 255, 255, 0.08);
+    }
+    .menu-button.active{
+      background:rgba(255, 255, 255, 0.1);
     }
     .hamburger{
-      display:none;
+      display:flex;
       flex-direction:column;
-      gap:5px;
-      cursor:pointer;
-      padding:8px;
-      z-index:1001;
+      gap:4px;
+      width:18px;
     }
     .hamburger span{
-      width:25px;
-      height:2.5px;
+      width:100%;
+      height:2px;
       background:var(--text);
-      border-radius:3px;
+      border-radius:2px;
       transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .hamburger.active span:nth-child(1){transform:rotate(45deg) translate(7px, 7px)}
-    .hamburger.active span:nth-child(2){opacity:0}
-    .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(7px, -7px)}
-    @media (max-width:768px){
+    .menu-button.active .hamburger span:nth-child(1){
+      transform:rotate(45deg) translate(5px, 5px);
+    }
+    .menu-button.active .hamburger span:nth-child(2){
+      opacity:0;
+    }
+    .menu-button.active .hamburger span:nth-child(3){
+      transform:rotate(-45deg) translate(5px, -5px);
+    }
+    @media (max-width:900px){
       .nav-links{
         position:fixed;
         top:0;
-        right:-100%;
-        height:100vh;
-        width:280px;
+        left:0;
+        right:0;
+        bottom:0;
+        background:rgba(10, 18, 36, 0.98);
+        backdrop-filter:blur(40px);
+        -webkit-backdrop-filter:blur(40px);
         flex-direction:column;
-        background:rgba(14, 26, 51, 0.98);
-        backdrop-filter:blur(20px);
-        padding:80px 20px 20px;
-        gap:0;
-        border-left:1px solid rgba(29, 42, 74, 0.5);
-        box-shadow:-10px 0 30px rgba(0, 0, 0, 0.3);
-        transition:right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        justify-content:center;
+        align-items:center;
+        gap:8px;
+        padding:80px 32px 32px;
+        opacity:0;
+        pointer-events:none;
+        transition:opacity 0.3s ease;
       }
-      .nav-links.active{right:0}
+      .nav-links.active{
+        opacity:1;
+        pointer-events:all;
+      }
       .nav-links a{
+        font-size:18px;
+        padding:16px 24px;
         width:100%;
-        padding:16px 20px;
-        border-radius:10px;
-        margin-bottom:8px;
-        border-left:3px solid transparent;
+        max-width:400px;
+        text-align:center;
+        border-radius:12px;
       }
-      .nav-links a:not(.btn-primary):hover{
-        background:rgba(255, 255, 255, 0.08);
-        border-left-color:var(--red);
-        transform:translateX(5px);
+      .nav-links a.active:not(.btn-primary)::after{
+        left:24px;
+        right:24px;
       }
-      .nav-links a.active{border-left-color:var(--red)}
-      .hamburger{display:flex}
+      .btn-primary{
+        margin-top:16px;
+        padding:14px 28px;
+        font-size:16px;
+      }
+      .menu-button{
+        display:flex;
+      }
     }
 
     /* Logo */
@@ -384,11 +429,6 @@
   <header>
     <nav class="nav-container">
       <div class="logo-text">MONTECITO <span>RACING</span></div>
-      <div class="hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
       <div class="nav-links">
         <a href="index.html">Home</a>
         <a href="our-story.html">Our Story</a>
@@ -396,6 +436,14 @@
         <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
         <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
         <a href="index.html#charity" class="btn-primary">Donate</a>
+      </div>
+      <div class="menu-button" onclick="toggleMenu()">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span>Menu</span>
       </div>
     </nav>
   </header>
@@ -555,26 +603,40 @@
   <!-- Navigation Toggle Script -->
   <script>
     function toggleMenu() {
-      const hamburger = document.querySelector('.hamburger');
+      const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
-      hamburger.classList.toggle('active');
+      menuButton.classList.toggle('active');
       navLinks.classList.toggle('active');
+      document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
     }
     document.addEventListener('click', (e) => {
-      const hamburger = document.querySelector('.hamburger');
+      const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
-      if (navLinks.classList.contains('active') &&
-          !navLinks.contains(e.target) &&
-          !hamburger.contains(e.target)) {
-        hamburger.classList.remove('active');
+      if (navLinks.classList.contains('active') && e.target === navLinks) {
+        menuButton.classList.remove('active');
         navLinks.classList.remove('active');
+        document.body.style.overflow = '';
       }
     });
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
-        document.querySelector('.hamburger').classList.remove('active');
-        document.querySelector('.nav-links').classList.remove('active');
+        const menuButton = document.querySelector('.menu-button');
+        const navLinks = document.querySelector('.nav-links');
+        menuButton.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.style.overflow = '';
       });
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const menuButton = document.querySelector('.menu-button');
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks.classList.contains('active')) {
+          menuButton.classList.remove('active');
+          navLinks.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
     });
   </script>
 </body>
