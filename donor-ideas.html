@@ -337,88 +337,12 @@
       }
     });
 
-    // Form handling with validation and user feedback
-    (function() {
-      const form = document.getElementById('donor-form');
-      const statusDiv = document.getElementById('form-status');
-      const submitBtn = form.querySelector('button[type="submit"]');
-
-      function showMessage(message, type) {
-        statusDiv.textContent = message;
-        statusDiv.className = 'form-message show ' + type;
-        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-
-      function clearMessage() {
-        statusDiv.className = 'form-message';
-      }
-
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        clearMessage();
-
-        // Validate required fields
-        const requiredFields = form.querySelectorAll('[required]');
-        let isValid = true;
-
-        requiredFields.forEach(field => {
-          if (!field.value.trim()) {
-            isValid = false;
-            field.focus();
-          }
-        });
-
-        if (!isValid) {
-          showMessage('Please fill in all required fields.', 'error');
-          return;
-        }
-
-        // Email validation
-        const emailField = document.getElementById('idea-email');
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(emailField.value)) {
-          showMessage('Please enter a valid email address.', 'error');
-          emailField.focus();
-          return;
-        }
-
-        // Show loading state
-        submitBtn.disabled = true;
-        submitBtn.classList.add('loading');
-
-        // Prepare mailto link as fallback
-        const formData = new FormData(form);
-        const fields = [];
-        for (let [key, value] of formData.entries()) {
-          const label = form.querySelector(`label[for="${key}"]`) ||
-                       form.querySelector(`label[for="idea-${key}"]`);
-          const labelText = label ? label.textContent.trim() : key;
-          fields.push(`${labelText}: ${value || 'N/A'}`);
-        }
-
-        const mailtoLink = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent('Donor Idea Submission')}&body=${encodeURIComponent(fields.join('\n'))}`;
-
-        // Open mailto and show success message
-        window.location.href = mailtoLink;
-
-        setTimeout(() => {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('loading');
-          showMessage('Your idea has been prepared. Please send the email from your mail client.', 'success');
-          form.reset();
-        }, 1000);
+    const donorForm = document.querySelector('.donor-form');
+    if (donorForm) {
+      donorForm.addEventListener('submit', () => {
+        closeMenu();
       });
-
-      // Real-time validation feedback
-      const emailField = document.getElementById('idea-email');
-      emailField.addEventListener('blur', function() {
-        if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
-          this.setCustomValidity('Please enter a valid email address');
-        } else {
-          this.setCustomValidity('');
-        }
-      });
-    })();
+    }
   </script>
 </body>
 </html>
