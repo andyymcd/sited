@@ -201,9 +201,8 @@
     </section>
 
     <section class="hero-card">
-      <p class="lead">Partner with Montecito Racing to fuel endurance sim racing excellence while amplifying support for cancer research at Cedars-Sinai Medical Center.</p>
       <h1>Sponsor Montecito Racing</h1>
-      <p class="lead">Sponsorship helps us elevate our racing program, showcase your brand on track and on stream, and drive more awareness for lifesaving research.</p>
+      <p class="lead">Partner with Montecito Racing to fuel endurance sim racing excellence while amplifying support for charity. Sponsorship helps us elevate our racing program, showcase your brand on track and on stream, and raise more awareness to support charity.</p>
     </section>
 
     <section class="card">
@@ -211,20 +210,19 @@
       <p class="lead">We collaborate with partners to tailor placements and storytelling across our racing calendar.</p>
       <ul>
         <li>Logo placement on cars, liveries, race suits, and stream overlays.</li>
-        <li>Mentions during race broadcasts, stream shoutouts, and commentary highlights.</li>
-        <li>Social media features, content integration, and co-branded community updates.</li>
-        <li>Opportunities to connect brand impact with fundraising for Cedars-Sinai cancer research.</li>
+        <li>Social media features, content integration, and fundraiser placement.</li>
+        <li>Opportunities to build your brand impact through our fundraising initiative.</li>
       </ul>
     </section>
 
-  <section class="card">
-    <h2>Sponsor inquiry</h2>
-    <p class="lead">Share a few details and we will reach out to explore a partnership that aligns with your goals.</p>
-    <!-- TODO: Hook this form up to a backend or form service to send submissions to montecitoracing@gmail.com -->
-    <form method="POST" action="mailto:montecitoracing@gmail.com" enctype="text/plain" target="_blank" class="sponsor-form">
-      <div class="form-grid">
-        <div>
-          <label for="sponsor-name">Full Name *</label>
+    <section class="card">
+      <h2>Sponsor inquiry</h2>
+      <p class="lead">Share a few details and we will reach out to explore a partnership that aligns with your goals.</p>
+      <!-- TODO: Hook this form up to a backend or form service to send submissions to montecitoracing@gmail.com -->
+      <form method="POST" action="">
+        <div class="form-grid">
+          <div>
+            <label for="sponsor-name">Full Name *</label>
             <input type="text" id="sponsor-name" name="name" required>
           </div>
           <div>
@@ -280,6 +278,26 @@
       setMenuState(false);
     }
 
+    function attachMailtoHandler(formSelector, subject) {
+      const form = document.querySelector(formSelector);
+      if (!form) return;
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const fields = Array.from(form.querySelectorAll('input, textarea, select'));
+        const body = fields
+          .map((field) => {
+            const label = form.querySelector(`label[for="${field.id}"]`);
+            const labelText = label ? label.textContent.trim() : field.name;
+            return `${labelText}: ${field.value || 'N/A'}`;
+          })
+          .join('\n');
+
+        const mailto = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+      });
+    }
+
     document.addEventListener('click', (e) => {
       const navLinks = document.querySelector('.nav-links');
       if (navLinks.classList.contains('active') && e.target === navLinks) {
@@ -306,12 +324,7 @@
       }
     });
 
-    const sponsorForm = document.querySelector('.sponsor-form');
-    if (sponsorForm) {
-      sponsorForm.addEventListener('submit', () => {
-        closeMenu();
-      });
-    }
+    attachMailtoHandler('.sponsor-form', 'Montecito Racing Sponsor Inquiry');
   </script>
 </body>
 </html>
