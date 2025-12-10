@@ -250,7 +250,8 @@
     <section class="card">
       <h2>Submit a donor idea</h2>
       <p class="lead">Tell us about your vision so we can explore it together.</p>
-      <form id="donor-form" novalidate>
+      <form id="donor-form" name="donor-ideas" method="POST" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="donor-ideas">
         <div class="form-grid">
           <div>
             <label for="idea-name">Name *</label>
@@ -337,12 +338,88 @@
       }
     });
 
-    const donorForm = document.querySelector('.donor-form');
-    if (donorForm) {
-      donorForm.addEventListener('submit', () => {
-        closeMenu();
+    // Netlify Forms submission with client-side validation and UX
+    (function() {
+      const form = document.getElementById('donor-form');
+      const statusDiv = document.getElementById('form-status');
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      function showMessage(message, type) {
+        statusDiv.textContent = message;
+        statusDiv.className = 'form-message show ' + type;
+        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function clearMessage() {
+        statusDiv.className = 'form-message';
+      }
+
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        clearMessage();
+
+        // Validate required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.focus();
+          }
+        });
+
+        if (!isValid) {
+          showMessage('Please fill in all required fields.', 'error');
+          return;
+        }
+
+        // Email validation
+        const emailField = document.getElementById('idea-email');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailField.value)) {
+          showMessage('Please enter a valid email address.', 'error');
+          emailField.focus();
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+
+        try {
+          // Submit to Netlify Forms
+          const formData = new FormData(form);
+          const response = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+          });
+
+          if (response.ok) {
+            showMessage('Thank you for sharing your idea! We will review and follow up soon.', 'success');
+            form.reset();
+          } else {
+            showMessage('Something went wrong. Please try again.', 'error');
+          }
+        } catch (error) {
+          showMessage('Unable to submit. Please check your connection and try again.', 'error');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+        }
       });
-    }
+
+      // Real-time validation feedback
+      const emailField = document.getElementById('idea-email');
+      emailField.addEventListener('blur', function() {
+        if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
+          this.setCustomValidity('Please enter a valid email address');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+    })();
   </script>
 </body>
 </html>

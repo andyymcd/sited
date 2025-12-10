@@ -325,7 +325,8 @@
     <section class="card">
       <h2>Sponsor inquiry</h2>
       <p class="lead">Share a few details and we will reach out to explore a partnership that aligns with your goals.</p>
-      <form id="sponsor-form" novalidate>
+      <form id="sponsor-form" name="sponsor-inquiry" method="POST" data-netlify="true" novalidate>
+        <input type="hidden" name="form-name" value="sponsor-inquiry">
         <div class="form-grid">
           <div>
             <label for="sponsor-name">Full Name *</label>
@@ -411,7 +412,7 @@
       }
     });
 
-    // Form handling with validation and user feedback
+    // Netlify Forms submission with client-side validation and UX
     (function() {
       const form = document.getElementById('sponsor-form');
       const statusDiv = document.getElementById('form-status');
@@ -427,7 +428,7 @@
         statusDiv.className = 'form-message';
       }
 
-      form.addEventListener('submit', function(e) {
+      form.addEventListener('submit', async function(e) {
         e.preventDefault();
         clearMessage();
 
@@ -460,27 +461,27 @@
         submitBtn.disabled = true;
         submitBtn.classList.add('loading');
 
-        // Prepare mailto link as fallback
-        const formData = new FormData(form);
-        const fields = [];
-        for (let [key, value] of formData.entries()) {
-          const label = form.querySelector(`label[for="${key}"]`) ||
-                       form.querySelector(`label[for="sponsor-${key}"]`);
-          const labelText = label ? label.textContent.trim() : key;
-          fields.push(`${labelText}: ${value || 'N/A'}`);
-        }
+        try {
+          // Submit to Netlify Forms
+          const formData = new FormData(form);
+          const response = await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+          });
 
-        const mailtoLink = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent('Sponsor Inquiry')}&body=${encodeURIComponent(fields.join('\n'))}`;
-
-        // Open mailto and show success message
-        window.location.href = mailtoLink;
-
-        setTimeout(() => {
+          if (response.ok) {
+            showMessage('Thank you for your inquiry! We will be in touch soon.', 'success');
+            form.reset();
+          } else {
+            showMessage('Something went wrong. Please try again.', 'error');
+          }
+        } catch (error) {
+          showMessage('Unable to submit. Please check your connection and try again.', 'error');
+        } finally {
           submitBtn.disabled = false;
           submitBtn.classList.remove('loading');
-          showMessage('Your inquiry has been prepared. Please send the email from your mail client.', 'success');
-          form.reset();
-        }, 1000);
+        }
       });
 
       // Real-time validation feedback
