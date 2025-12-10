@@ -325,7 +325,7 @@
     <section class="card">
       <h2>Sponsor inquiry</h2>
       <p class="lead">Share a few details and we will reach out to explore a partnership that aligns with your goals.</p>
-      <form id="sponsor-form" name="sponsor-inquiry" method="POST" action="/" data-netlify="true" data-netlify-honeypot="bot-field" novalidate>
+      <form name="sponsor-inquiry" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="sponsor-inquiry">
         <p style="display:none">
           <label>Don't fill this out if you're human: <input name="bot-field" /></label>
@@ -415,91 +415,7 @@
       }
     });
 
-    // Netlify Forms submission with client-side validation and UX
-    (function() {
-      const form = document.getElementById('sponsor-form');
-      const statusDiv = document.getElementById('form-status');
-      const submitBtn = form.querySelector('button[type="submit"]');
-
-      function showMessage(message, type) {
-        statusDiv.textContent = message;
-        statusDiv.className = 'form-message show ' + type;
-        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-
-      function clearMessage() {
-        statusDiv.className = 'form-message';
-      }
-
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        clearMessage();
-
-        // Validate required fields
-        const requiredFields = form.querySelectorAll('[required]');
-        let isValid = true;
-
-        requiredFields.forEach(field => {
-          if (!field.value.trim()) {
-            isValid = false;
-            field.focus();
-          }
-        });
-
-        if (!isValid) {
-          showMessage('Please fill in all required fields.', 'error');
-          return;
-        }
-
-        // Email validation
-        const emailField = document.getElementById('sponsor-email');
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(emailField.value)) {
-          showMessage('Please enter a valid email address.', 'error');
-          emailField.focus();
-          return;
-        }
-
-        // Show loading state
-        submitBtn.disabled = true;
-        submitBtn.classList.add('loading');
-
-        try {
-          // Submit to Netlify Forms
-          const formData = new FormData(form);
-
-          const response = await fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData).toString()
-          });
-
-          // Netlify returns 200 for form submissions
-          if (response.ok || response.status === 200) {
-            showMessage('Thank you for your inquiry! We will be in touch soon.', 'success');
-            form.reset();
-          } else {
-            showMessage('Something went wrong. Please try again.', 'error');
-          }
-        } catch (error) {
-          console.error('Form submission error:', error);
-          showMessage('Unable to submit. Please check your connection and try again.', 'error');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('loading');
-        }
-      });
-
-      // Real-time validation feedback
-      const emailField = document.getElementById('sponsor-email');
-      emailField.addEventListener('blur', function() {
-        if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
-          this.setCustomValidity('Please enter a valid email address');
-        } else {
-          this.setCustomValidity('');
-        }
-      });
-    })();
+    // Native Netlify form - no JavaScript needed
   </script>
 </body>
 </html>
