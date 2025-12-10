@@ -13,6 +13,10 @@
       --text:#f2f6ff;
       --muted:#a9b5d1;
       --border:#1d2a4a;
+      --success:#10b981;
+      --success-bg:rgba(16, 185, 129, 0.1);
+      --error:#ef4444;
+      --error-bg:rgba(239, 68, 68, 0.1);
     }
     *{box-sizing:border-box; margin:0; padding:0}
     html,body{height:100%}
@@ -86,14 +90,117 @@
     li{margin:8px 0;}
     .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
     @media (max-width:700px){.form-grid{grid-template-columns:1fr}}
-    label{display:block; margin-bottom:6px; font-weight:600; color:var(--muted);}
-    input, textarea{width:100%; padding:12px; border-radius:8px; border:1px solid rgba(148, 163, 184, 0.25); background:rgba(255, 255, 255, 0.03); color:var(--text); font-size:15px;}
+
+    label{
+      display:block;
+      margin-bottom:6px;
+      font-weight:600;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    input, textarea{
+      width:100%;
+      padding:12px;
+      border-radius:8px;
+      border:1px solid rgba(148, 163, 184, 0.25);
+      background:rgba(255, 255, 255, 0.03);
+      color:var(--text);
+      font-size:15px;
+      transition:all 0.2s ease;
+      font-family:inherit;
+    }
+
+    input:focus, textarea:focus{
+      outline:none;
+      border-color:var(--red);
+      background:rgba(255, 255, 255, 0.05);
+      box-shadow:0 0 0 3px rgba(214, 30, 46, 0.1);
+    }
+
+    input:invalid:not(:placeholder-shown),
+    textarea:invalid:not(:placeholder-shown){
+      border-color:var(--error);
+    }
+
     textarea{min-height:140px; resize:vertical;}
-    .form-actions{margin-top:12px;}
+
+    .form-actions{margin-top:20px; display:flex; gap:12px; align-items:center;}
+
     .logo-wrap{display:flex; align-items:center; justify-content:center; padding:24px; border:1px solid rgba(148, 163, 184, 0.15); border-radius:8px; background:linear-gradient(180deg,var(--navy-2),#0b162f); min-height:180px; margin-bottom:20px;}
     .logo-wrap img{max-height:clamp(120px, 18vw, 220px); width:auto; object-fit:contain}
-    .btn{display:inline-block; padding:10px 20px; background:transparent; border:1px solid rgba(148, 163, 184, 0.3); color:var(--text); border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.2s ease;}
-    .btn:hover{background:rgba(255, 255, 255, 0.08); border-color:rgba(148, 163, 184, 0.5);}
+
+    .btn{
+      display:inline-block;
+      padding:12px 24px;
+      background:transparent;
+      border:1px solid rgba(148, 163, 184, 0.3);
+      color:var(--text);
+      border-radius:6px;
+      font-weight:600;
+      cursor:pointer;
+      transition:all 0.2s ease;
+      font-size:15px;
+      font-family:inherit;
+    }
+
+    .btn:hover:not(:disabled){
+      background:rgba(255, 255, 255, 0.08);
+      border-color:rgba(148, 163, 184, 0.5);
+      transform:translateY(-1px);
+    }
+
+    .btn:disabled{
+      opacity:0.5;
+      cursor:not-allowed;
+    }
+
+    /* Form message styles */
+    .form-message{
+      padding:14px 18px;
+      border-radius:8px;
+      margin-top:16px;
+      display:none;
+      font-size:15px;
+      font-weight:500;
+      animation:slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn{
+      from{opacity:0; transform:translateY(-10px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    .form-message.show{display:block}
+
+    .form-message.success{
+      background:var(--success-bg);
+      border:1px solid var(--success);
+      color:var(--success);
+    }
+
+    .form-message.error{
+      background:var(--error-bg);
+      border:1px solid var(--error);
+      color:var(--error);
+    }
+
+    /* Loading state */
+    .btn.loading::after{
+      content:'';
+      width:14px;
+      height:14px;
+      margin-left:8px;
+      border:2px solid transparent;
+      border-top-color:currentColor;
+      border-radius:50%;
+      display:inline-block;
+      animation:spin 0.6s linear infinite;
+    }
+
+    @keyframes spin{
+      to{transform:rotate(360deg)}
+    }
   </style>
 </head>
 <body>
@@ -143,16 +250,15 @@
     <section class="card">
       <h2>Submit a donor idea</h2>
       <p class="lead">Tell us about your vision so we can explore it together.</p>
-      <!-- TODO: Connect this form to a backend or email workflow for donor idea review -->
-      <form method="POST" action="">
+      <form id="donor-form" novalidate>
         <div class="form-grid">
           <div>
             <label for="idea-name">Name *</label>
-            <input type="text" id="idea-name" name="name" required>
+            <input type="text" id="idea-name" name="name" required aria-required="true">
           </div>
           <div>
             <label for="idea-email">Email *</label>
-            <input type="email" id="idea-email" name="email" required>
+            <input type="email" id="idea-email" name="email" required aria-required="true">
           </div>
           <div>
             <label for="idea-affiliation">Affiliation / Organization</label>
@@ -164,7 +270,7 @@
           </div>
           <div>
             <label for="idea-description">Idea description *</label>
-            <textarea id="idea-description" name="description" required></textarea>
+            <textarea id="idea-description" name="description" required aria-required="true"></textarea>
           </div>
           <div>
             <label for="idea-funding">Approximate funding range</label>
@@ -174,6 +280,7 @@
         <div class="form-actions">
           <button type="submit" class="btn">Submit Idea</button>
         </div>
+        <div id="form-status" class="form-message" role="status" aria-live="polite"></div>
       </form>
       <p class="lead" style="margin-top:12px;">Submissions are expressions of interest only. Montecito Racing will follow up to discuss details and next steps.</p>
     </section>
@@ -204,26 +311,6 @@
       setMenuState(false);
     }
 
-    function attachMailtoHandler(formSelector, subject) {
-      const form = document.querySelector(formSelector);
-      if (!form) return;
-
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const fields = Array.from(form.querySelectorAll('input, textarea, select'));
-        const body = fields
-          .map((field) => {
-            const label = form.querySelector(`label[for="${field.id}"]`);
-            const labelText = label ? label.textContent.trim() : field.name;
-            return `${labelText}: ${field.value || 'N/A'}`;
-          })
-          .join('\n');
-
-        const mailto = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailto;
-      });
-    }
-
     document.addEventListener('click', (e) => {
       const navLinks = document.querySelector('.nav-links');
       if (navLinks.classList.contains('active') && e.target === navLinks) {
@@ -250,7 +337,88 @@
       }
     });
 
-    attachMailtoHandler('.donor-form', 'Montecito Racing Donor Idea Submission');
+    // Form handling with validation and user feedback
+    (function() {
+      const form = document.getElementById('donor-form');
+      const statusDiv = document.getElementById('form-status');
+      const submitBtn = form.querySelector('button[type="submit"]');
+
+      function showMessage(message, type) {
+        statusDiv.textContent = message;
+        statusDiv.className = 'form-message show ' + type;
+        statusDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function clearMessage() {
+        statusDiv.className = 'form-message';
+      }
+
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        clearMessage();
+
+        // Validate required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.focus();
+          }
+        });
+
+        if (!isValid) {
+          showMessage('Please fill in all required fields.', 'error');
+          return;
+        }
+
+        // Email validation
+        const emailField = document.getElementById('idea-email');
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(emailField.value)) {
+          showMessage('Please enter a valid email address.', 'error');
+          emailField.focus();
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.classList.add('loading');
+
+        // Prepare mailto link as fallback
+        const formData = new FormData(form);
+        const fields = [];
+        for (let [key, value] of formData.entries()) {
+          const label = form.querySelector(`label[for="${key}"]`) ||
+                       form.querySelector(`label[for="idea-${key}"]`);
+          const labelText = label ? label.textContent.trim() : key;
+          fields.push(`${labelText}: ${value || 'N/A'}`);
+        }
+
+        const mailtoLink = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent('Donor Idea Submission')}&body=${encodeURIComponent(fields.join('\n'))}`;
+
+        // Open mailto and show success message
+        window.location.href = mailtoLink;
+
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('loading');
+          showMessage('Your idea has been prepared. Please send the email from your mail client.', 'success');
+          form.reset();
+        }, 1000);
+      });
+
+      // Real-time validation feedback
+      const emailField = document.getElementById('idea-email');
+      emailField.addEventListener('blur', function() {
+        if (this.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
+          this.setCustomValidity('Please enter a valid email address');
+        } else {
+          this.setCustomValidity('');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
