@@ -35,7 +35,6 @@
       backdrop-filter:saturate(180%) blur(20px);
       -webkit-backdrop-filter:saturate(180%) blur(20px);
       border-bottom:1px solid rgba(255, 255, 255, 0.06);
-      transition:all 0.3s ease;
     }
     body.nav-open header{
       background:var(--navy);
@@ -156,6 +155,11 @@
       transform:rotate(-45deg) translate(5px, -5px);
     }
     @media (max-width:900px){
+      header{
+        background:var(--navy);
+        backdrop-filter:none;
+        -webkit-backdrop-filter:none;
+      }
       .nav-links{
         position:fixed;
         top:0;
@@ -176,6 +180,7 @@
       .nav-links.active{
         display:flex;
         pointer-events:all;
+        background:var(--navy);
       }
       .nav-links a{
         font-size:18px;

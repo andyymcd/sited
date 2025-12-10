@@ -35,7 +35,6 @@
       backdrop-filter:saturate(180%) blur(20px);
       -webkit-backdrop-filter:saturate(180%) blur(20px);
       border-bottom:1px solid rgba(255, 255, 255, 0.06);
-      transition:all 0.3s ease;
     }
     body.nav-open header{
       background:var(--navy);
@@ -63,9 +62,10 @@
     .menu-button.active .hamburger span:nth-child(3){transform:rotate(-45deg) translate(5px, -5px)}
 
     @media (max-width:900px){
+      header{background:var(--navy); backdrop-filter:none; -webkit-backdrop-filter:none;}
       .nav-links{position:fixed; top:0; left:0; right:0; bottom:0; background:var(--navy); flex-direction:column; justify-content:flex-start; align-items:center; gap:8px; padding:100px 24px 32px; display:none; pointer-events:none; z-index:9999;}
       body.nav-open .nav-links,
-      .nav-links.active{display:flex; pointer-events:all;}
+      .nav-links.active{display:flex; pointer-events:all; background:var(--navy);}
       .nav-links a{font-size:18px; padding:14px 24px; width:100%; max-width:320px; text-align:center; border-radius:8px; background:rgba(255, 255, 255, 0.03); border:1px solid rgba(255, 255, 255, 0.06);}
       .nav-links a:hover{background:rgba(255, 255, 255, 0.08)}
       .nav-links a.active:not(.btn-primary){background:rgba(255, 255, 255, 0.08); border-color:rgba(214, 30, 46, 0.3);}
@@ -204,6 +204,26 @@
       setMenuState(false);
     }
 
+    function attachMailtoHandler(formSelector, subject) {
+      const form = document.querySelector(formSelector);
+      if (!form) return;
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const fields = Array.from(form.querySelectorAll('input, textarea, select'));
+        const body = fields
+          .map((field) => {
+            const label = form.querySelector(`label[for="${field.id}"]`);
+            const labelText = label ? label.textContent.trim() : field.name;
+            return `${labelText}: ${field.value || 'N/A'}`;
+          })
+          .join('\n');
+
+        const mailto = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+      });
+    }
+
     document.addEventListener('click', (e) => {
       const navLinks = document.querySelector('.nav-links');
       if (navLinks.classList.contains('active') && e.target === navLinks) {
@@ -229,6 +249,8 @@
         closeMenu();
       }
     });
+
+    attachMailtoHandler('.donor-form', 'Montecito Racing Donor Idea Submission');
   </script>
 </body>
 </html>
