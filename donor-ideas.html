@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Donor Ideas — Montecito Racing</title>
+  <style>
+    :root{
+      --navy:#0a1224;
+      --navy-2:#0e1a33;
+      --red:#d61e2e;
+      --red-hover:#ff4757;
+      --text:#f2f6ff;
+      --muted:#a9b5d1;
+      --border:#1d2a4a;
+    }
+    *{box-sizing:border-box; margin:0; padding:0}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+      background:linear-gradient(180deg,var(--navy),#0b152e 60%,#0a142b);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:var(--text); text-decoration:none; transition:all 0.3s ease}
+    .container{max-width:1000px; margin:0 auto; padding:20px}
+
+    /* Header */
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(10, 18, 36, 0.8);
+      backdrop-filter:saturate(180%) blur(20px);
+      -webkit-backdrop-filter:saturate(180%) blur(20px);
+      border-bottom:1px solid rgba(255, 255, 255, 0.06);
+    }
+    body.nav-open header{
+      background:var(--navy);
+      backdrop-filter:none;
+      -webkit-backdrop-filter:none;
+    }
+    .nav-container{max-width:1280px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;}
+    .logo-text{font-size:18px; font-weight:600; color:var(--text); letter-spacing:-0.3px; white-space:nowrap;}
+    .logo-text span{color:var(--red)}
+    .logo-text:hover{opacity:0.85}
+    .nav-links{display:flex; gap:4px; align-items:center;}
+    .nav-links a{padding:8px 14px; border-radius:8px; font-weight:500; font-size:14px; transition:all 0.2s ease; white-space:nowrap; position:relative;}
+    .nav-links a:not(.btn-primary):hover{background:rgba(255, 255, 255, 0.08)}
+    .nav-links a.active:not(.btn-primary){color:var(--text); background:rgba(255, 255, 255, 0.1)}
+    .nav-links a.active:not(.btn-primary)::after{content:''; position:absolute; bottom:0; left:14px; right:14px; height:2px; background:var(--red); border-radius:2px;}
+    .btn-primary{background:var(--red); color:#fff !important; font-weight:600; padding:8px 16px;}
+    .btn-primary:hover{background:var(--red-hover); transform:translateY(-1px)}
+    .menu-button{display:none; align-items:center; gap:8px; padding:8px 12px; background:rgba(255, 255, 255, 0.05); border:1px solid rgba(255, 255, 255, 0.1); border-radius:8px; cursor:pointer; transition:all 0.2s ease; font-size:14px; font-weight:500; color:var(--text);}
+    .menu-button:hover{background:rgba(255, 255, 255, 0.08)}
+    .menu-button.active{background:rgba(255, 255, 255, 0.1)}
+    .hamburger{display:flex; flex-direction:column; gap:4px; width:18px;}
+    .hamburger span{width:100%; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s cubic-bezier(0.4,0,0.2,1)}
+    .menu-button.active .hamburger span:nth-child(1){transform:rotate(45deg) translate(5px, 5px)}
+    .menu-button.active .hamburger span:nth-child(2){opacity:0}
+    .menu-button.active .hamburger span:nth-child(3){transform:rotate(-45deg) translate(5px, -5px)}
+
+    @media (max-width:900px){
+      header{background:var(--navy); backdrop-filter:none; -webkit-backdrop-filter:none;}
+      .nav-links{position:fixed; top:0; left:0; right:0; bottom:0; background:var(--navy); flex-direction:column; justify-content:flex-start; align-items:center; gap:8px; padding:100px 24px 32px; display:none; pointer-events:none; z-index:9999;}
+      body.nav-open .nav-links,
+      .nav-links.active{display:flex; pointer-events:all; background:var(--navy);}
+      .nav-links a{font-size:18px; padding:14px 24px; width:100%; max-width:320px; text-align:center; border-radius:8px; background:rgba(255, 255, 255, 0.03); border:1px solid rgba(255, 255, 255, 0.06);}
+      .nav-links a:hover{background:rgba(255, 255, 255, 0.08)}
+      .nav-links a.active:not(.btn-primary){background:rgba(255, 255, 255, 0.08); border-color:rgba(214, 30, 46, 0.3);}
+      .nav-links a.active:not(.btn-primary)::after{display:none}
+      .btn-primary{margin-top:16px; padding:14px 28px; font-size:16px; background:var(--red); border-color:var(--red);}
+      .menu-button{display:flex; z-index:10000;}
+    }
+
+    body.nav-open{overflow:hidden}
+
+    /* Layout */
+    h1{font-size:clamp(32px,5vw,48px); margin:0 0 10px; line-height:1.2;}
+    h2{font-size:clamp(20px,3.5vw,28px); margin:0 0 12px; border-left:4px solid var(--red); padding-left:12px;}
+    p.lead{color:#d7def1; margin:0 0 14px}
+    .card{background:linear-gradient(180deg,var(--navy-2),#0b162f); border:1px solid rgba(148, 163, 184, 0.12); border-radius:8px; padding:24px; margin:18px 0;}
+    .hero-card{background:linear-gradient(135deg, rgba(214, 30, 46, 0.08) 0%, rgba(14, 26, 51, 1) 50%); border:1px solid rgba(214, 30, 46, 0.3); border-radius:8px; padding:44px 28px; margin:24px 0; text-align:center; box-shadow:0 0 20px rgba(214, 30, 46, 0.08);}
+    ul{margin:0; padding-left:20px; color:#d7def1;}
+    li{margin:8px 0;}
+    .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+    @media (max-width:700px){.form-grid{grid-template-columns:1fr}}
+    label{display:block; margin-bottom:6px; font-weight:600; color:var(--muted);}
+    input, textarea{width:100%; padding:12px; border-radius:8px; border:1px solid rgba(148, 163, 184, 0.25); background:rgba(255, 255, 255, 0.03); color:var(--text); font-size:15px;}
+    textarea{min-height:140px; resize:vertical;}
+    .form-actions{margin-top:12px;}
+    .logo-wrap{display:flex; align-items:center; justify-content:center; padding:24px; border:1px solid rgba(148, 163, 184, 0.15); border-radius:8px; background:linear-gradient(180deg,var(--navy-2),#0b162f); min-height:180px; margin-bottom:20px;}
+    .logo-wrap img{max-height:clamp(120px, 18vw, 220px); width:auto; object-fit:contain}
+    .btn{display:inline-block; padding:10px 20px; background:transparent; border:1px solid rgba(148, 163, 184, 0.3); color:var(--text); border-radius:6px; font-weight:600; cursor:pointer; transition:all 0.2s ease;}
+    .btn:hover{background:rgba(255, 255, 255, 0.08); border-color:rgba(148, 163, 184, 0.5);}
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav-container">
+      <a href="index.html" class="logo-text">MONTECITO <span>RACING</span></a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="our-story.html">Our Story</a>
+        <a href="photo-gallery.html">Gallery</a>
+        <a href="sponsors.html">Sponsors</a>
+        <a href="donor-ideas.html" class="active">Donor Ideas</a>
+        <a href="https://discord.gg/4ecn8DXf" target="_blank" rel="noopener">Discord</a>
+        <a href="https://www.tiktok.com/@montecito.racing" target="_blank" rel="noopener">TikTok</a>
+        <a href="index.html#charity" class="btn-primary">Donate</a>
+      </div>
+      <button class="menu-button" onclick="toggleMenu()" aria-label="Toggle menu">
+        <div class="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span>Menu</span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="logo-wrap" aria-label="Team Logo">
+      <img src="logo2.png" alt="Montecito Racing Logo" onerror="this.style.display='none'">
+    </section>
+
+    <section class="hero-card">
+      <p class="lead">Individual philanthropists can shape the future of our racing-driven impact. Donor-directed ideas and seed grants help us explore new programs that connect Montecito Racing with Cedars-Sinai cancer research and other aligned initiatives.</p>
+      <h1>Donor Ideas &amp; Seed Grants</h1>
+      <p class="lead">As part of seed grants, a forum on the Montecito Racing portal will invite donor-directed concepts that teams and partners can apply for.</p>
+    </section>
+
+    <section class="card">
+      <h2>How donor-directed ideas work</h2>
+      <ul>
+        <li>Step 1: A philanthropist shares an idea or concept through the submission form.</li>
+        <li>Step 2: Montecito Racing reviews how it aligns with our endurance program and partner institutions like Cedars-Sinai.</li>
+        <li>Step 3: We follow up to refine scope, possible seed grant structure, and timing — informational only, no binding commitments.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Submit a donor idea</h2>
+      <p class="lead">Tell us about your vision so we can explore it together.</p>
+      <!-- TODO: Connect this form to a backend or email workflow for donor idea review -->
+      <form method="POST" action="" class="donor-form">
+        <div class="form-grid">
+          <div>
+            <label for="idea-name">Name *</label>
+            <input type="text" id="idea-name" name="name" required>
+          </div>
+          <div>
+            <label for="idea-email">Email *</label>
+            <input type="email" id="idea-email" name="email" required>
+          </div>
+          <div>
+            <label for="idea-affiliation">Affiliation / Organization</label>
+            <input type="text" id="idea-affiliation" name="affiliation" placeholder="Optional">
+          </div>
+          <div>
+            <label for="idea-area">Area of interest</label>
+            <input type="text" id="idea-area" name="interest" placeholder="Program, institution, or focus area">
+          </div>
+          <div>
+            <label for="idea-description">Idea description *</label>
+            <textarea id="idea-description" name="description" required></textarea>
+          </div>
+          <div>
+            <label for="idea-funding">Approximate funding range</label>
+            <input type="text" id="idea-funding" name="funding" placeholder="$5,000–$10,000">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">Submit Idea</button>
+        </div>
+      </form>
+      <p class="lead" style="margin-top:12px;">Submissions are expressions of interest only. Montecito Racing will follow up to discuss details and next steps.</p>
+    </section>
+  </div>
+
+  <script>
+    function setMenuState(open) {
+      const menuButton = document.querySelector('.menu-button');
+      const navLinks = document.querySelector('.nav-links');
+
+      if (open) {
+        document.body.classList.add('nav-open');
+        menuButton.classList.add('active');
+        navLinks.classList.add('active');
+      } else {
+        document.body.classList.remove('nav-open');
+        menuButton.classList.remove('active');
+        navLinks.classList.remove('active');
+      }
+    }
+
+    function toggleMenu() {
+      const isOpen = document.body.classList.contains('nav-open');
+      setMenuState(!isOpen);
+    }
+
+    function closeMenu() {
+      setMenuState(false);
+    }
+
+    function attachMailtoHandler(formSelector, subject) {
+      const form = document.querySelector(formSelector);
+      if (!form) return;
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const fields = Array.from(form.querySelectorAll('input, textarea, select'));
+        const body = fields
+          .map((field) => {
+            const label = form.querySelector(`label[for="${field.id}"]`);
+            const labelText = label ? label.textContent.trim() : field.name;
+            return `${labelText}: ${field.value || 'N/A'}`;
+          })
+          .join('\n');
+
+        const mailto = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailto;
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const navLinks = document.querySelector('.nav-links');
+      if (navLinks.classList.contains('active') && e.target === navLinks) {
+        closeMenu();
+      }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', closeMenu);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks.classList.contains('active')) {
+          closeMenu();
+        }
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 900) {
+        closeMenu();
+      }
+    });
+
+    attachMailtoHandler('.donor-form', 'Montecito Racing Donor Idea Submission');
+  </script>
+</body>
+</html>
