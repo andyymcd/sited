@@ -144,7 +144,7 @@
       <h2>Submit a donor idea</h2>
       <p class="lead">Tell us about your vision so we can explore it together.</p>
       <!-- TODO: Connect this form to a backend or email workflow for donor idea review -->
-      <form method="POST" action="">
+      <form method="POST" action="mailto:montecitoracing@gmail.com" enctype="text/plain" target="_blank" class="donor-form">
         <div class="form-grid">
           <div>
             <label for="idea-name">Name *</label>
@@ -204,26 +204,6 @@
       setMenuState(false);
     }
 
-    function attachMailtoHandler(formSelector, subject) {
-      const form = document.querySelector(formSelector);
-      if (!form) return;
-
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const fields = Array.from(form.querySelectorAll('input, textarea, select'));
-        const body = fields
-          .map((field) => {
-            const label = form.querySelector(`label[for="${field.id}"]`);
-            const labelText = label ? label.textContent.trim() : field.name;
-            return `${labelText}: ${field.value || 'N/A'}`;
-          })
-          .join('\n');
-
-        const mailto = `mailto:montecitoracing@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailto;
-      });
-    }
-
     document.addEventListener('click', (e) => {
       const navLinks = document.querySelector('.nav-links');
       if (navLinks.classList.contains('active') && e.target === navLinks) {
@@ -250,7 +230,12 @@
       }
     });
 
-    attachMailtoHandler('.donor-form', 'Montecito Racing Donor Idea Submission');
+    const donorForm = document.querySelector('.donor-form');
+    if (donorForm) {
+      donorForm.addEventListener('submit', () => {
+        closeMenu();
+      });
+    }
   </script>
 </body>
 </html>
