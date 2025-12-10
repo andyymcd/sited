@@ -168,13 +168,13 @@
         align-items:center;
         gap:8px;
         padding:100px 24px 32px;
-        opacity:0;
+        display:none;
         pointer-events:none;
-        transition:opacity 0.25s ease;
         z-index:9999;
       }
+      body.nav-open .nav-links,
       .nav-links.active{
-        opacity:1;
+        display:flex;
         pointer-events:all;
       }
       .nav-links a{
@@ -588,27 +588,28 @@
 
   <!-- Navigation Toggle Script -->
   <script>
-    function toggleMenu() {
+    function setMenuState(open) {
       const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
-      const isOpen = navLinks.classList.contains('active');
 
-      menuButton.classList.toggle('active');
-      navLinks.classList.toggle('active');
-
-      if (!isOpen) {
+      if (open) {
         document.body.classList.add('nav-open');
+        menuButton.classList.add('active');
+        navLinks.classList.add('active');
       } else {
         document.body.classList.remove('nav-open');
+        menuButton.classList.remove('active');
+        navLinks.classList.remove('active');
       }
     }
 
+    function toggleMenu() {
+      const isOpen = document.body.classList.contains('nav-open');
+      setMenuState(!isOpen);
+    }
+
     function closeMenu() {
-      const menuButton = document.querySelector('.menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      menuButton.classList.remove('active');
-      navLinks.classList.remove('active');
-      document.body.classList.remove('nav-open');
+      setMenuState(false);
     }
 
     document.addEventListener('click', (e) => {

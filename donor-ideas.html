@@ -42,13 +42,6 @@
       backdrop-filter:none;
       -webkit-backdrop-filter:none;
     }
-    body.nav-open .nav-links{
-      background:var(--navy);
-      opacity:1;
-      pointer-events:all;
-      backdrop-filter:none;
-      -webkit-backdrop-filter:none;
-    }
     .nav-container{max-width:1280px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:20px;}
     .logo-text{font-size:18px; font-weight:600; color:var(--text); letter-spacing:-0.3px; white-space:nowrap;}
     .logo-text span{color:var(--red)}
@@ -70,8 +63,9 @@
     .menu-button.active .hamburger span:nth-child(3){transform:rotate(-45deg) translate(5px, -5px)}
 
     @media (max-width:900px){
-      .nav-links{position:fixed; top:0; left:0; right:0; bottom:0; background:var(--navy); flex-direction:column; justify-content:flex-start; align-items:center; gap:8px; padding:100px 24px 32px; opacity:0; pointer-events:none; transition:opacity 0.25s ease; z-index:9999;}
-      .nav-links.active{opacity:1; pointer-events:all;}
+      .nav-links{position:fixed; top:0; left:0; right:0; bottom:0; background:var(--navy); flex-direction:column; justify-content:flex-start; align-items:center; gap:8px; padding:100px 24px 32px; display:none; pointer-events:none; z-index:9999;}
+      body.nav-open .nav-links,
+      .nav-links.active{display:flex; pointer-events:all;}
       .nav-links a{font-size:18px; padding:14px 24px; width:100%; max-width:320px; text-align:center; border-radius:8px; background:rgba(255, 255, 255, 0.03); border:1px solid rgba(255, 255, 255, 0.06);}
       .nav-links a:hover{background:rgba(255, 255, 255, 0.08)}
       .nav-links a.active:not(.btn-primary){background:rgba(255, 255, 255, 0.08); border-color:rgba(214, 30, 46, 0.3);}
@@ -133,16 +127,17 @@
     </section>
 
     <section class="hero-card">
+      <p class="lead">Individual philanthropists can shape the future of our racing-driven impact. Donor-directed ideas and seed grants help us explore new programs that connect Montecito Racing with Cedars-Sinai cancer research and other aligned initiatives.</p>
       <h1>Donor Ideas &amp; Seed Grants</h1>
-      <p class="lead">Individual philanthropists may have specific ideas or grants they would like to fund directly. Donor-directed ideas and seed grants help us explore new programs that connect to Montecito Racing and our aligned initiatives. As part of seed grants, a forum on the Montecito Racing portal will invite donor-directed concepts that teams and partners can apply for.</p>
+      <p class="lead">As part of seed grants, a forum on the Montecito Racing portal will invite donor-directed concepts that teams and partners can apply for.</p>
     </section>
 
     <section class="card">
       <h2>How donor-directed ideas work</h2>
       <ul>
         <li>Step 1: A philanthropist shares an idea or concept through the submission form.</li>
-        <li>Step 2: Montecito Racing reviews how it aligns with our progam.</li>
-        <li>Step 3: We follow up.</li>
+        <li>Step 2: Montecito Racing reviews how it aligns with our endurance program and partner institutions.</li>
+        <li>Step 3: We follow up to discuss and brainstorm.</li>
       </ul>
     </section>
 
@@ -186,27 +181,28 @@
   </div>
 
   <script>
-    function toggleMenu() {
+    function setMenuState(open) {
       const menuButton = document.querySelector('.menu-button');
       const navLinks = document.querySelector('.nav-links');
-      const isOpen = navLinks.classList.contains('active');
 
-      menuButton.classList.toggle('active');
-      navLinks.classList.toggle('active');
-
-      if (!isOpen) {
+      if (open) {
         document.body.classList.add('nav-open');
+        menuButton.classList.add('active');
+        navLinks.classList.add('active');
       } else {
         document.body.classList.remove('nav-open');
+        menuButton.classList.remove('active');
+        navLinks.classList.remove('active');
       }
     }
 
+    function toggleMenu() {
+      const isOpen = document.body.classList.contains('nav-open');
+      setMenuState(!isOpen);
+    }
+
     function closeMenu() {
-      const menuButton = document.querySelector('.menu-button');
-      const navLinks = document.querySelector('.nav-links');
-      menuButton.classList.remove('active');
-      navLinks.classList.remove('active');
-      document.body.classList.remove('nav-open');
+      setMenuState(false);
     }
 
     document.addEventListener('click', (e) => {
